@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0f0d">
+<title>DET 每日练习 · Speaking 125</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='80' font-size='80'>🦉</text></svg>">
+</head>
+<body>
+
+<nav id="sidebar">
+  <h1>🦉 DET 练习室<small>目标 Speaking ≥ 125 · 8/17 前</small></h1>
+
+  <div class="nav-group">
+    <button class="nav-item active" data-view="dashboard">📋 今日任务</button>
+  </div>
+
+  <div class="nav-group">
+    <div class="group-label">Speaking ★ 核心</div>
+    <button class="nav-item" data-view="coach">🎓 口语教练 <span class="tag">每日</span></button>
+    <button class="nav-item" data-view="is">🎤 即兴问答 <span class="tag">35s</span></button>
+    <button class="nav-item" data-view="sap">📷 看图说话 <span class="tag">90s</span></button>
+    <button class="nav-item" data-view="rts">🗣️ 读题演讲 <span class="tag">90s</span></button>
+    <button class="nav-item" data-view="ss">🎬 压轴长答 <span class="tag">3min</span></button>
+  </div>
+
+  <div class="nav-group">
+    <div class="group-label">Listening</div>
+    <button class="nav-item" data-view="lt">🎧 听写句子 <span class="tag">1min</span></button>
+    <button class="nav-item" data-view="sum">📝 对话摘要 <span class="tag">75s</span></button>
+  </div>
+
+  <div class="nav-group">
+    <div class="group-label">Reading</div>
+    <button class="nav-item" data-view="rs">⚡ 真假词 <span class="tag">5s</span></button>
+    <button class="nav-item" data-view="fb">🔤 补全单词 <span class="tag">20s</span></button>
+    <button class="nav-item" data-view="ct">📖 补全段落 <span class="tag">3min</span></button>
+  </div>
+
+  <div class="nav-group">
+    <div class="group-label">Writing</div>
+    <button class="nav-item" data-view="wap">🖼️ 看图写作 <span class="tag">1min</span></button>
+    <button class="nav-item" data-view="iw">💬 互动写作 <span class="tag">8min</span></button>
+    <button class="nav-item" data-view="ws">✍️ 写作样本 <span class="tag">5min</span></button>
+  </div>
+
+  <div class="nav-group">
+    <div class="group-label">积累</div>
+    <button class="nav-item" data-view="vocab">📒 生词本</button>
+    <button class="nav-item" data-view="wrong">📕 错题本</button>
+  </div>
+
+  <div class="nav-group">
+    <div class="group-label">游戏</div>
+    <button class="nav-item" data-view="battle">⚡ 边打边刷</button>
+  </div>
+
+  <div class="nav-group">
+    <div class="group-label">参考</div>
+    <button class="nav-item" data-view="scores">📊 计分规则</button>
+    <button class="nav-item" data-view="log">📈 练习记录</button>
+  </div>
+</nav>
+
+<main id="main">
+  <div id="https-banner" class="banner-warn hidden">
+    ⚠️ 当前是 HTTP 访问，浏览器禁止录音。请改用部署时配置的 <b>HTTPS 地址</b>（如 Tailscale Serve / 反向代理）即可正常录音。
+    听写、阅读、写作不受影响。
+  </div>
+
+  <div id="battle-pane"></div>
+
+  <section class="view active" id="view-dashboard"></section>
+  <section class="view" id="view-is"></section>
+  <section class="view" id="view-sap"></section>
+  <section class="view" id="view-rts"></section>
+  <section class="view" id="view-ss"></section>
+  <section class="view" id="view-lt"></section>
+  <section class="view" id="view-sum"></section>
+  <section class="view" id="view-rs"></section>
+  <section class="view" id="view-fb"></section>
+  <section class="view" id="view-ct"></section>
+  <section class="view" id="view-wap"></section>
+  <section class="view" id="view-iw"></section>
+  <section class="view" id="view-ws"></section>
+  <section class="view" id="view-vocab"></section>
+  <section class="view" id="view-wrong"></section>
+  <section class="view" id="view-battle"></section>
+  <section class="view" id="view-coach"></section>
+  <section class="view" id="view-scores"></section>
+  <section class="view" id="view-log"></section>
+</main>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

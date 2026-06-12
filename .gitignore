@@ -1,0 +1,12 @@
+# user data — never commit progress saves
+data/
+
+# python env + caches
+whisper-venv/
+__pycache__/
+*.pyc
+
+# misc
+*.log
+*.tmp
+.DS_Store
