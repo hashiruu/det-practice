@@ -6,6 +6,12 @@
 
 > Turn DET prep into an RPG: every answered question fuels your hero's auto-battle. An open-source, self-hosted practice platform with timed simulations of 12 task types, AI scoring & corrections, local Whisper transcription, and a full game layer on top. *English summary below.*
 
+## 🎬 实机演示
+
+![Demo: 边打边刷——左边盾牌格挡、回旋斩、暴击魔龙，右边补全单词](docs/demo.gif)
+
+▶️ [观看高清完整视频（MP4）](docs/demo.mp4) — 盾牌格挡、回旋斩雷光、场景昼夜切换、苍蓝魔龙挨暴击，全在 40 秒里。
+
 ## 📸 截图
 
 | 每日打卡仪表盘 | 边打边刷（战斗 × 刷题分屏） |
