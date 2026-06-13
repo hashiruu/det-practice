@@ -1,4 +1,5 @@
 # DET 练习室 🦉 · DET Practice Arena
+> 本仓库开发过程由*Fable 5*支持。
 
 **简体中文** · [English](README.en.md)
 
