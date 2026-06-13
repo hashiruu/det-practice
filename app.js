@@ -531,6 +531,20 @@ const ASSET_BOSSES = [
   { key: "eye", species: "魔眼蝠", icon: "👁️", growl: "bat", anims: { battle: 8, atk: 8, hurt: 4, die: 4 }, speed: { battle: 120, atk: 90, hurt: 100, die: 140 }, css: "width:80%;margin-bottom:22%" },
   { key: "knightb", species: "黑暗骑士", icon: "🛡️", growl: "owlking", anims: { battle: 11, atk: 7, atk2: 7, hurt: 4, die: 11 }, speed: { battle: 130, atk: 95, atk2: 95, hurt: 110, die: 110 }, css: "width:128%;margin-left:-12%" },
   { key: "drag", species: "魔龙", icon: "🐉", growl: "dragon", anims: { battle: 8, atk: 12, atk2: 12, hurt: 6, die: 12 }, speed: { battle: 240, atk: 60, atk2: 60, hurt: 70, die: 58 }, css: "width:175%;margin-left:-45%" },
+  { key: "ewz1", species: "红袍咒师", icon: "🔥", growl: "shadow", anims: { battle: 8, atk: 8, hurt: 4, die: 5, run: 8 }, speed: { battle: 180, atk: 80, hurt: 110, die: 130, run: 90 }, css: "width:113%" },
+  { key: "ewz3", species: "亡灵巫师", icon: "💀", growl: "shadow", anims: { battle: 10, atk: 13, hurt: 3, die: 18, run: 8 }, speed: { battle: 180, atk: 80, hurt: 110, die: 130, run: 90 }, css: "width:111%" },
+  { key: "hk2", species: "堕落骑士", icon: "🛡️", growl: "owlking", anims: { battle: 11, atk: 6, hurt: 4, die: 9, run: 8 }, speed: { battle: 180, atk: 80, hurt: 110, die: 130, run: 90 }, css: "width:113%" },
+  { key: "hunt", species: "暗影女猎手", icon: "🏹", growl: "ghost", anims: { battle: 8, atk: 5, atk2: 5, atk3: 7, hurt: 3, die: 8, run: 8 }, speed: { battle: 180, atk: 80, atk2: 80, atk3: 80, hurt: 110, die: 130, run: 90 }, css: "width:111%" },
+  { key: "hunt2", species: "翠羽游侠", icon: "🍃", growl: "ghost", anims: { battle: 10, atk: 6, hurt: 3, die: 10, run: 8 }, speed: { battle: 180, atk: 80, hurt: 110, die: 130, run: 90 }, css: "width:116%" },
+  { key: "mh1", species: "浪人武者", icon: "🥋", growl: "owlking", anims: { battle: 8, atk: 6, atk2: 6, hurt: 4, die: 6, run: 8 }, speed: { battle: 180, atk: 80, atk2: 80, hurt: 110, die: 130, run: 90 }, css: "width:147%" },
+  { key: "mh3", species: "武道宗师", icon: "👊", growl: "owlking", anims: { battle: 10, atk: 7, atk2: 6, atk3: 9, hurt: 3, die: 11, run: 8 }, speed: { battle: 180, atk: 80, atk2: 80, atk3: 80, hurt: 110, die: 130, run: 90 }, css: "width:123%" },
+  { key: "mking", species: "暴君国王", icon: "👑", growl: "owlking", anims: { battle: 6, atk: 6, atk2: 6, hurt: 4, die: 11, run: 8 }, speed: { battle: 180, atk: 80, atk2: 80, hurt: 110, die: 130, run: 90 }, css: "width:150%" },
+  { key: "mwar", species: "重甲卫士", icon: "⚔️", growl: "owlking", anims: { battle: 8, atk: 5, atk2: 5, hurt: 4, die: 12, run: 10 }, speed: { battle: 180, atk: 80, atk2: 80, hurt: 110, die: 130, run: 90 }, css: "width:90%" },
+  { key: "mcf2slime", species: "软泥史莱姆", icon: "🟢", growl: "slime", anims: { battle: 14, atk: 19, hurt: 3, die: 11, run: 6 }, speed: { battle: 180, atk: 80, hurt: 110, die: 130, run: 90 }, css: "width:152%" },
+  { key: "mcf2mimic", species: "噬金宝箱", icon: "🎁", growl: "troll", anims: { battle: 1, atk: 14, atk2: 13, hurt: 3, die: 6, run: 6 }, speed: { battle: 180, atk: 80, atk2: 80, hurt: 110, die: 130, run: 90 }, css: "width:159%" },
+  { key: "mcf2bat", species: "噬魂蝠", icon: "🦇", growl: "bat", anims: { battle: 11, atk: 11, hurt: 3, die: 4 }, speed: { battle: 180, atk: 80, hurt: 110, die: 130 }, css: "width:90%" },
+  { key: "mcf2rat", species: "瘟疫巨鼠", icon: "🐀", growl: "slime", anims: { battle: 10, atk: 12, hurt: 3, die: 6, run: 8 }, speed: { battle: 180, atk: 80, hurt: 110, die: 130, run: 90 }, css: "width:125%" },
+  { key: "wizp", species: "奥术法师", icon: "🔮", growl: "shadow", anims: { battle: 7, atk: 9, atk2: 9, hurt: 4, die: 8, run: 9 }, speed: { battle: 180, atk: 80, atk2: 80, hurt: 110, die: 130, run: 90 }, css: "width:112%" },
 ];
 // 变色变体：紫龙、蓝龙、黄金哥布林……同一物种逐轮换色换名
 const BOSS_VARIANTS = [
