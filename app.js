@@ -1911,13 +1911,56 @@ function confetti(scopeSel) { // 不带参数=全屏庆祝；带选择器=只在
   }
 }
 
+// ── 目标设定：分数 + 考试日期由用户自己定（det_goal，跨设备同步）──
+function getGoal() { return J(localStorage.getItem("det_goal")); }
+function openGoalSetup() {
+  document.getElementById("goal-modal")?.remove();
+  const g = getGoal() || {};
+  const wrap = document.createElement("div");
+  wrap.id = "goal-modal";
+  wrap.innerHTML = `<div class="goal-card card">
+    <h3>🎯 设定你的目标</h3>
+    <p class="muted">写下目标分数和考试日期，首页会为你倒计时。之后点侧栏顶部的目标行随时可改。</p>
+    <label class="goal-row">目标 Speaking 分数 <input type="number" id="goal-score" min="10" max="160" step="5" value="${g.score || 120}"></label>
+    <label class="goal-row">考试日期 <input type="date" id="goal-date" value="${g.date || ""}"></label>
+    <div style="display:flex;gap:10px;margin-top:14px">
+      <button class="primary" id="goal-save">保存</button>
+      <button class="ghost" id="goal-skip">先逛逛</button>
+    </div></div>`;
+  document.body.appendChild(wrap);
+  $("#goal-save", wrap).onclick = () => {
+    const score = Math.max(10, Math.min(160, +$("#goal-score", wrap).value || 120));
+    const date = $("#goal-date", wrap).value;
+    localStorage.setItem("det_goal", JSON.stringify({ score, date }));
+    wrap.remove();
+    renderGoalLine(); renderDashboard();
+    toast("🎯 目标已设定，冲！");
+  };
+  $("#goal-skip", wrap).onclick = () => { sessionStorage.setItem("goalskip", "1"); wrap.remove(); };
+}
+function renderGoalLine() {
+  const el = document.getElementById("goal-line");
+  if (!el) return;
+  const demo = location.search.includes("demo"); // 演示/截图模式：不暴露个人目标日期
+  const g = getGoal();
+  el.textContent = demo
+    ? "目标 Speaking ≥ 125"
+    : g && g.date
+    ? `目标 Speaking ≥ ${g.score} · ${g.date.slice(5).replace("-", "/")} 前`
+    : g ? `目标 Speaking ≥ ${g.score}` : "🎯 点击设定目标";
+  el.style.cursor = "pointer";
+  el.title = "点击修改目标";
+  el.onclick = openGoalSetup;
+}
+
 function renderDashboard() {
   const view = $("#view-dashboard");
   const log = getLog();
   const today = dayKey(Date.now());
   const days = new Set(log.map(e => dayKey(e.t)));
   const streak = calcStreak(days, today);
-  const daysLeft = Math.ceil((new Date("2026-08-17T00:00:00") - Date.now()) / 86400000);
+  const goal = getGoal();
+  const daysLeft = goal && goal.date && !location.search.includes("demo") ? Math.ceil((new Date(goal.date + "T00:00:00") - Date.now()) / 86400000) : null;
   const { Q, B, allDone, extra, g } = settleTower();
   const doneCnt = Q.filter(q => q.done >= q.n).length;
   const totalMin = Q.reduce((s, q) => s + q.time, 0);
@@ -1950,7 +1993,7 @@ function renderDashboard() {
         <div class="lbl">${xp} XP${lv.next ? ` · 距 ${lv.next.icon} ${lv.next.name} 还差 ${lv.next.xp - xp} XP` : " · 满级！"}</div>
       </div>
       <div class="hero-coins" id="hero-coins" title="去打怪塔花掉它">🪶 ${fmtNum(g.coins)}<div class="lbl">羽币</div></div>
-      <div class="hero-deadline">${daysLeft}<div class="lbl">天后截止</div></div>
+      <div class="hero-deadline" style="cursor:pointer" onclick="openGoalSetup()" title="点击设定/修改目标">${daysLeft != null ? `${daysLeft}<div class="lbl">天后截止</div>` : `🎯<div class="lbl">设定目标</div>`}</div>
     </div>
 
     ${allDone ? `<div class="card dash-banner" style="border-color:var(--accent);background:#16240f;padding:12px 20px"><b>🎉 今日全勤！+100 XP · +${BASE_CLEAR_REWARD} 🪶</b> <span class="muted">进阶塔已解锁——多刷的题都在爬塔。</span></div>` : ""}
@@ -3816,6 +3859,8 @@ document.querySelectorAll(".nav-item").forEach(btn => {
 });
 
 renderDashboard();
+renderGoalLine();
+setTimeout(() => { if (!getGoal() && !sessionStorage.getItem("goalskip") && !location.search.includes("demo")) openGoalSetup(); }, 1400);
 renderScores();
 renderLog();
 renderVocab();

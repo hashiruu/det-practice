@@ -1,16 +1,18 @@
 # DET 练习室 🦉 · DET Practice Arena
 
+**简体中文** · [English](README.en.md)
+
 **把 Duolingo English Test 备考变成一场 RPG。**
 
 刷题赚能量 → 能量驱动自动战斗 → 击杀 BOSS 掉落金币 → 升级装备、爬塔、转生。每答对一道题，左边的勇者就替你多砍 30 秒——背单词从此变成打怪升级。
 
-> Turn DET prep into an RPG: every answered question fuels your hero's auto-battle. An open-source, self-hosted practice platform with timed simulations of 12 task types, AI scoring & corrections, local Whisper transcription, and a full game layer on top. *English summary below.*
+> 一个开源、可自托管的 DET 练习平台：12 个题型限时模拟、对标官方评分标准的 AI 评分与纠错、本地 Whisper 转写，外加一整套把刷题变成 RPG 的游戏系统。English README → [README.en.md](README.en.md).
 
 ## 🎬 实机演示
 
-![Demo: 边打边刷——左边盾牌格挡、回旋斩、暴击魔龙，右边补全单词](docs/demo.gif)
+![Demo: 左边自动战斗，右边同步刷题](docs/demo.gif)
 
-▶️ [观看高清完整视频（MP4）](docs/demo.mp4) — 盾牌格挡、回旋斩雷光、场景昼夜切换、苍蓝魔龙挨暴击，全在 40 秒里。
+▶️ [观看高清完整视频（MP4）](docs/demo.mp4) — 夜城黑暗骑士、盾牌格挡、回旋斩暴击、场景昼夜切换，右侧全程同步刷题。
 
 ## 📸 截图
 
@@ -79,18 +81,3 @@ node server.js          # http://localhost:8090
 ## 📄 License
 
 代码以 [MIT](LICENSE) 开源。题库内容为本项目原创（非官方真题）；Duolingo English Test 是 Duolingo, Inc. 的商标，本项目与其无关联。
-
----
-
-## English Summary
-
-**DET Practice Arena** turns Duolingo English Test prep into an RPG:
-
-- **Practice fuels battle**: each answered question grants 30 seconds of idle auto-combat — your hero swings hand-choreographed sword combos while monsters charge, block, and counter
-- **60+ named bosses** from CC0 animated avatars (goblins, skeletons, fire serpents, dragons…) with recolored elite variants every cycle, gear shops, combat levels, title ladders, and a prestige/rebirth loop
-- **Today's answer accuracy = today's crit rate** — the better you study, the harder you hit
-- Timed simulations of **12 DET task types**, AI scoring built on the official scoring guide's criteria and bands (transcription-error tolerant), highlighter-style full-transcript corrections, a daily AI speaking coach, and never-repeating question banks with automatic AI refills
-- **Server-side Whisper transcription** (CPU-friendly), cross-browser progress sync, daily quest rings with streaks and badges
-- Zero-build vanilla JS frontend + a single Node server; bring any OpenAI-compatible chat API
-
-Deploy: point `DEEPSEEK_ENV_PATH` at an env file with your API key, optionally start the whisper daemon, run `node server.js`, serve over HTTPS for mic access.

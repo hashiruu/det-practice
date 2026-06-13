@@ -1292,3 +1292,10 @@ mark.fix-good { background: rgba(76, 217, 130, 0.22); color: #8fe6a8; font-weigh
 /* —— 战场内彩纸：绝不越出矩形 —— */
 .confetti-local { position: absolute; top: -30px; animation: confettiFallLocal 2.3s linear forwards; }
 @keyframes confettiFallLocal { to { transform: translateY(380px) rotate(540deg); opacity: 0.85; } }
+
+/* —— 目标设定弹窗 —— */
+#goal-modal { position: fixed; inset: 0; z-index: 1200; background: rgba(5, 8, 6, 0.66);
+  display: flex; align-items: center; justify-content: center; backdrop-filter: blur(3px); }
+#goal-modal .goal-card { width: min(420px, 92vw); }
+#goal-modal .goal-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin: 10px 0; font-size: 14px; }
+#goal-modal input { width: 150px; }
