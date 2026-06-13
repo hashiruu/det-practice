@@ -521,36 +521,24 @@ const BOSSES = [
 // ── asset bosses: CC0 web avatars — Cethiel (dragon/zombie, OGA) + LuizMelo pixel packs (itch.io) ──
 // frames pre-rendered into mon/; every floor cycles the roster, deeper cycles get hue-rotate variants
 const ASSET_BOSSES = [
-  { key: "gob", species: "哥布林", icon: "👺", growl: "troll", anims: { battle: 4, atk: 8, hurt: 4, die: 4 }, speed: { battle: 190, atk: 90, hurt: 100, die: 140 }, css: "width:112%" },
-  { key: "skel", species: "骷髅剑士", icon: "💀", growl: "ghost", anims: { battle: 4, atk: 8, hurt: 4, die: 4 }, speed: { battle: 200, atk: 90, hurt: 100, die: 150 }, css: "width:115%" },
-  { key: "worm", species: "炎蟒", icon: "🐍", growl: "serpent", anims: { battle: 9, atk: 16, hurt: 3, die: 8 }, speed: { battle: 140, atk: 55, hurt: 110, die: 90 }, css: "width:118%" },
-  { key: "zomb", species: "尸鬼", icon: "🧟", growl: "troll", anims: { battle: 8, atk: 12, atk2: 12, hurt: 6, die: 12 }, speed: { battle: 230, atk: 65, atk2: 70, hurt: 70, die: 60 }, css: "width:130%;margin-left:-18%" },
-  { key: "wiz", species: "邪法师", icon: "🧙", growl: "shadow", anims: { battle: 8, atk: 8, atk2: 8, hurt: 3, die: 7 }, speed: { battle: 170, atk: 95, atk2: 95, hurt: 120, die: 120 }, css: "width:145%;margin-left:-25%" },
-  { key: "mush", species: "毒菇怪", icon: "🍄", growl: "slime", anims: { battle: 4, atk: 8, hurt: 4, die: 4 }, speed: { battle: 210, atk: 90, hurt: 100, die: 150 }, css: "width:100%" },
-  { key: "oni", species: "鬼面武士", icon: "👹", growl: "owlking", anims: { battle: 4, atk: 4, atk2: 4, hurt: 3, die: 7 }, speed: { battle: 220, atk: 150, atk2: 150, hurt: 120, die: 130 }, css: "width:120%;margin-left:-8%" },
-  { key: "eye", species: "魔眼蝠", icon: "👁️", growl: "bat", anims: { battle: 8, atk: 8, hurt: 4, die: 4 }, speed: { battle: 120, atk: 90, hurt: 100, die: 140 }, css: "width:80%;margin-bottom:22%" },
-  { key: "knightb", species: "黑暗骑士", icon: "🛡️", growl: "owlking", anims: { battle: 11, atk: 7, atk2: 7, hurt: 4, die: 11 }, speed: { battle: 130, atk: 95, atk2: 95, hurt: 110, die: 110 }, css: "width:128%;margin-left:-12%" },
-  { key: "drag", species: "魔龙", icon: "🐉", growl: "dragon", anims: { battle: 8, atk: 12, atk2: 12, hurt: 6, die: 12 }, speed: { battle: 240, atk: 60, atk2: 60, hurt: 70, die: 58 }, css: "width:175%;margin-left:-45%" },
-  { key: "ewz1", species: "红袍咒师", icon: "🔥", growl: "shadow", anims: { battle: 8, atk: 8, hurt: 4, die: 5, run: 8 }, speed: { battle: 180, atk: 80, hurt: 110, die: 130, run: 90 }, css: "width:113%" },
-  { key: "ewz3", species: "亡灵巫师", icon: "💀", growl: "shadow", anims: { battle: 10, atk: 13, hurt: 3, die: 18, run: 8 }, speed: { battle: 180, atk: 80, hurt: 110, die: 130, run: 90 }, css: "width:111%" },
-  { key: "hk2", species: "堕落骑士", icon: "🛡️", growl: "owlking", anims: { battle: 11, atk: 6, hurt: 4, die: 9, run: 8 }, speed: { battle: 180, atk: 80, hurt: 110, die: 130, run: 90 }, css: "width:113%" },
-  { key: "hunt", species: "暗影女猎手", icon: "🏹", growl: "ghost", anims: { battle: 8, atk: 5, atk2: 5, atk3: 7, hurt: 3, die: 8, run: 8 }, speed: { battle: 180, atk: 80, atk2: 80, atk3: 80, hurt: 110, die: 130, run: 90 }, css: "width:111%" },
-  { key: "hunt2", species: "翠羽游侠", icon: "🍃", growl: "ghost", anims: { battle: 10, atk: 6, hurt: 3, die: 10, run: 8 }, speed: { battle: 180, atk: 80, hurt: 110, die: 130, run: 90 }, css: "width:116%" },
-  { key: "mh1", species: "浪人武者", icon: "🥋", growl: "owlking", anims: { battle: 8, atk: 6, atk2: 6, hurt: 4, die: 6, run: 8 }, speed: { battle: 180, atk: 80, atk2: 80, hurt: 110, die: 130, run: 90 }, css: "width:147%" },
-  { key: "mh3", species: "武道宗师", icon: "👊", growl: "owlking", anims: { battle: 10, atk: 7, atk2: 6, atk3: 9, hurt: 3, die: 11, run: 8 }, speed: { battle: 180, atk: 80, atk2: 80, atk3: 80, hurt: 110, die: 130, run: 90 }, css: "width:123%" },
-  { key: "mking", species: "暴君国王", icon: "👑", growl: "owlking", anims: { battle: 6, atk: 6, atk2: 6, hurt: 4, die: 11, run: 8 }, speed: { battle: 180, atk: 80, atk2: 80, hurt: 110, die: 130, run: 90 }, css: "width:150%" },
-  { key: "mwar", species: "重甲卫士", icon: "⚔️", growl: "owlking", anims: { battle: 8, atk: 5, atk2: 5, hurt: 4, die: 12, run: 10 }, speed: { battle: 180, atk: 80, atk2: 80, hurt: 110, die: 130, run: 90 }, css: "width:90%" },
-  { key: "mcf2slime", species: "软泥史莱姆", icon: "🟢", growl: "slime", anims: { battle: 14, atk: 19, hurt: 3, die: 11, run: 6 }, speed: { battle: 180, atk: 80, hurt: 110, die: 130, run: 90 }, css: "width:152%" },
-  { key: "mcf2mimic", species: "噬金宝箱", icon: "🎁", growl: "troll", anims: { battle: 1, atk: 14, atk2: 13, hurt: 3, die: 6, run: 6 }, speed: { battle: 180, atk: 80, atk2: 80, hurt: 110, die: 130, run: 90 }, css: "width:159%" },
-  { key: "mcf2bat", species: "噬魂蝠", icon: "🦇", growl: "bat", anims: { battle: 11, atk: 11, hurt: 3, die: 4 }, speed: { battle: 180, atk: 80, hurt: 110, die: 130 }, css: "width:90%" },
-  { key: "mcf2rat", species: "瘟疫巨鼠", icon: "🐀", growl: "slime", anims: { battle: 10, atk: 12, hurt: 3, die: 6, run: 8 }, speed: { battle: 180, atk: 80, hurt: 110, die: 130, run: 90 }, css: "width:125%" },
-  { key: "wizp", species: "奥术法师", icon: "🔮", growl: "shadow", anims: { battle: 7, atk: 9, atk2: 9, hurt: 4, die: 8, run: 9 }, speed: { battle: 180, atk: 80, atk2: 80, hurt: 110, die: 130, run: 90 }, css: "width:112%" },
-  { key: "dsbern", species: "圣伯纳巨獒", icon: "🐕", growl: "troll", anims: { battle: 10, atk: 3, hurt: 1, die: 3, run: 8 }, speed: { battle: 170, atk: 120, hurt: 110, die: 160, run: 80 }, css: "width:80%" },
-  { key: "ddane", species: "大丹猎犬", icon: "🐕", growl: "troll", anims: { battle: 10, atk: 3, hurt: 1, die: 3, run: 8 }, speed: { battle: 170, atk: 120, hurt: 110, die: 160, run: 80 }, css: "width:80%" },
-  { key: "dgold", species: "狂躁金毛", icon: "🦮", growl: "troll", anims: { battle: 10, atk: 3, hurt: 1, die: 3, run: 8 }, speed: { battle: 170, atk: 120, hurt: 110, die: 160, run: 80 }, css: "width:80%" },
-  { key: "dakita", species: "秋田斗犬", icon: "🐕", growl: "troll", anims: { battle: 10, atk: 3, hurt: 1, die: 3, run: 8 }, speed: { battle: 170, atk: 120, hurt: 110, die: 160, run: 80 }, css: "width:80%" },
-  { key: "dschn", species: "雪纳瑞利齿", icon: "🐩", growl: "troll", anims: { battle: 10, atk: 3, hurt: 1, die: 3, run: 8 }, speed: { battle: 170, atk: 120, hurt: 110, die: 160, run: 80 }, css: "width:80%" },
-  { key: "dhusky", species: "哈士奇狼", icon: "🐺", growl: "troll", anims: { battle: 10, atk: 3, hurt: 1, die: 3, run: 8 }, speed: { battle: 170, atk: 120, hurt: 110, die: 160, run: 80 }, css: "width:80%" },
+  { key: "gob", species: "哥布林", icon: "👺", growl: "troll", anims: { battle: 4, atk: 8, hurt: 4, die: 4 }, speed: { battle: 190, atk: 90, hurt: 100, die: 140 }, hit: [0.496, 0.61], css: "width:112%" },
+  { key: "skel", species: "骷髅剑士", icon: "💀", growl: "ghost", anims: { battle: 4, atk: 8, hurt: 4, die: 4 }, speed: { battle: 200, atk: 90, hurt: 100, die: 150 }, hit: [0.285, 0.486], css: "width:115%" },
+  { key: "worm", species: "炎蟒", icon: "🐍", growl: "serpent", anims: { battle: 9, atk: 16, hurt: 3, die: 8 }, speed: { battle: 140, atk: 55, hurt: 110, die: 90 }, hit: [0.502, 0.711], css: "width:118%" },
+  { key: "zomb", species: "尸鬼", icon: "🧟", smooth: 1, growl: "troll", anims: { battle: 8, atk: 12, atk2: 12, hurt: 6, die: 12 }, speed: { battle: 230, atk: 65, atk2: 70, hurt: 70, die: 60 }, hit: [0.58, 0.528], css: "width:130%;margin-left:-18%" },
+  { key: "wiz", species: "邪法师", icon: "🧙", growl: "shadow", anims: { battle: 8, atk: 8, atk2: 8, hurt: 3, die: 7 }, speed: { battle: 170, atk: 95, atk2: 95, hurt: 120, die: 120 }, hit: [0.634, 0.632], css: "width:145%;margin-left:-25%" },
+  { key: "mush", species: "毒菇怪", icon: "🍄", growl: "slime", anims: { battle: 4, atk: 8, hurt: 4, die: 4 }, speed: { battle: 210, atk: 90, hurt: 100, die: 150 }, hit: [0.437, 0.55], css: "width:100%" },
+  { key: "oni", species: "鬼面武士", icon: "👹", growl: "owlking", anims: { battle: 4, atk: 4, atk2: 4, hurt: 3, die: 7 }, speed: { battle: 220, atk: 150, atk2: 150, hurt: 120, die: 130 }, hit: [0.723, 0.678], css: "width:120%;margin-left:-8%" },
+  { key: "eye", species: "魔眼蝠", icon: "👁️", growl: "bat", anims: { battle: 8, atk: 8, hurt: 4, die: 4 }, speed: { battle: 120, atk: 90, hurt: 100, die: 140 }, hit: [0.469, 0.344], css: "width:80%;margin-bottom:22%" },
+  { key: "knightb", species: "黑暗骑士", icon: "🛡️", growl: "owlking", anims: { battle: 11, atk: 7, atk2: 7, hurt: 4, die: 11 }, speed: { battle: 130, atk: 95, atk2: 95, hurt: 110, die: 110 }, hit: [0.625, 0.665], css: "width:128%;margin-left:-12%" },
+  { key: "drag", species: "魔龙", icon: "🐉", smooth: 1, growl: "dragon", anims: { battle: 8, atk: 12, atk2: 12, hurt: 6, die: 12 }, speed: { battle: 240, atk: 60, atk2: 60, hurt: 70, die: 58 }, hit: [0.441, 0.629], css: "width:175%;margin-left:-45%" },
+  { key: "ewz1", species: "红袍咒师", icon: "🔥", growl: "shadow", anims: { battle: 8, atk: 8, hurt: 4, die: 5, run: 8 }, speed: { battle: 180, atk: 80, hurt: 110, die: 130, run: 90 }, hit: [0.29, 0.595], css: "width:113%" },
+  { key: "ewz3", species: "亡灵巫师", icon: "💀", growl: "shadow", anims: { battle: 10, atk: 13, hurt: 3, die: 18, run: 8 }, speed: { battle: 180, atk: 80, hurt: 110, die: 130, run: 90 }, hit: [0.242, 0.582], css: "width:111%" },
+  { key: "hk2", species: "堕落骑士", icon: "🛡️", growl: "owlking", anims: { battle: 11, atk: 6, hurt: 4, die: 9, run: 8 }, speed: { battle: 180, atk: 80, hurt: 110, die: 130, run: 90 }, hit: [0.578, 0.67], css: "width:113%" },
+  { key: "hunt", species: "暗影女猎手", icon: "🏹", growl: "ghost", anims: { battle: 8, atk: 5, atk2: 5, atk3: 7, hurt: 3, die: 8, run: 8 }, speed: { battle: 180, atk: 80, atk2: 80, atk3: 80, hurt: 110, die: 130, run: 90 }, hit: [0.55, 0.679], css: "width:111%" },
+  { key: "hunt2", species: "翠羽游侠", icon: "🍃", growl: "ghost", anims: { battle: 10, atk: 6, hurt: 3, die: 10, run: 8 }, speed: { battle: 180, atk: 80, hurt: 110, die: 130, run: 90 }, hit: [0.669, 0.583], css: "width:116%" },
+  { key: "mh1", species: "浪人武者", icon: "🥋", growl: "owlking", anims: { battle: 8, atk: 6, atk2: 6, hurt: 4, die: 6, run: 8 }, speed: { battle: 180, atk: 80, atk2: 80, hurt: 110, die: 130, run: 90 }, hit: [0.729, 0.676], css: "width:147%" },
+  { key: "mh3", species: "武道宗师", icon: "👊", growl: "owlking", anims: { battle: 10, atk: 7, atk2: 6, atk3: 9, hurt: 3, die: 11, run: 8 }, speed: { battle: 180, atk: 80, atk2: 80, atk3: 80, hurt: 110, die: 130, run: 90 }, hit: [0.489, 0.746], css: "width:123%" },
+  { key: "wizp", species: "奥术法师", icon: "🔮", growl: "shadow", anims: { battle: 7, atk: 9, atk2: 9, hurt: 4, die: 8, run: 9 }, speed: { battle: 180, atk: 80, atk2: 80, hurt: 110, die: 130, run: 90 }, hit: [0.554, 0.658], css: "width:112%" },
 ];
 // 变色变体：紫龙、蓝龙、黄金哥布林……同一物种逐轮换色换名
 const BOSS_VARIANTS = [
@@ -564,31 +552,53 @@ function bossAssetOf(n) {
   return { ...base, vName: v.p, filter: v.d ? `hue-rotate(${v.d}deg) saturate(1.1)` : "" };
 }
 // ── hero web avatar: CC0 "Fantasy Warrior" by LuizMelo (itch.io) — 克劳德标准的银发大剑士 ──
-const HERO_AVATAR = { key: "hero", anims: { idle: 10, run: 8, atk1: 7, atk2: 7, atk3: 8, hurt: 3, die: 7 },
-  speed: { idle: 110, run: 85, atk1: 60, atk2: 60, atk3: 55, hurt: 95, die: 110 } };
-const HMON = { t: null, preloaded: 0 };
+// ── 勇者多形态：随战斗等级 clv 进化（更多形象）。全部 CC0 LuizMelo 高清像素侧视 ──
+const HERO_FORMS = [
+  { key: "hero",  titles: ["夜读学徒", "夜读剑客", "见习剑士", "夜读剑士"], name: "夜读剑士", min: 0,  anims: { idle: 10, run: 8, atk1: 7, atk2: 7, atk3: 8, hurt: 3, die: 7 },
+    speed: { idle: 110, run: 85, atk1: 60, atk2: 60, atk3: 55, hurt: 95, die: 110 }, css: "width:215%;margin-left:-55%;margin-top:-58%" },
+  { key: "hero2", titles: ["重甲剑士", "破阵剑豪", "百战剑豪", "重甲剑豪"], name: "重甲剑豪", min: 10, anims: { idle: 8, run: 10, atk1: 5, atk2: 5, hurt: 4, die: 12 },
+    speed: { idle: 120, run: 80, atk1: 70, atk2: 70, hurt: 100, die: 120 }, css: "width:120%;margin-left:-10%;margin-top:-34%" },
+  { key: "hero3", titles: ["剑术宗师", "无双剑圣", "词海剑仙", "剑皇"], name: "剑皇", min: 25, anims: { idle: 6, run: 8, atk1: 6, atk2: 6, hurt: 4, die: 11 },
+    speed: { idle: 130, run: 85, atk1: 70, atk2: 70, hurt: 100, die: 120 }, css: "width:150%;margin-left:-26%;margin-top:-30%" },
+];
+function heroFormFor(g) {
+  const clv = (g && g.clv) || 0;
+  let f = HERO_FORMS[0];
+  for (const form of HERO_FORMS) if (clv >= form.min) f = form;
+  return f;
+}
+let HERO_CUR = HERO_FORMS[0];
+const HMON = { t: null, preloaded: {} };
 const heroDefaultAnim = () => (BATTLE.running ? "run" : "idle");
+function heroResolveAnim(name) {
+  if (HERO_CUR.anims[name]) return name;
+  if (name === "atk3") return HERO_CUR.anims.atk2 ? "atk2" : "atk1";
+  if (name === "atk2") return "atk1";
+  if (name === "run") return "idle";
+  return "idle";
+}
 function heroAnim(name, once) {
   const img = document.getElementById("hero-img");
-  if (!img || !HERO_AVATAR.anims[name]) return;
+  if (!img) return;
+  name = heroResolveAnim(name);
   clearInterval(HMON.t);
-  const n = HERO_AVATAR.anims[name], ms = HERO_AVATAR.speed[name] || 90;
+  const n = HERO_CUR.anims[name], ms = HERO_CUR.speed[name] || 90;
   let i = 0;
-  img.src = `mon/hero_${name}_0.png`;
+  img.src = `mon/${HERO_CUR.key}_${name}_0.png`;
   HMON.t = setInterval(() => {
     i++;
     if (i >= n) {
       if (once) { clearInterval(HMON.t); heroAnim(heroDefaultAnim()); return; }
       i = 0;
     }
-    img.src = `mon/hero_${name}_${i}.png`;
+    img.src = `mon/${HERO_CUR.key}_${name}_${i}.png`;
   }, ms);
 }
 function preloadHero() {
-  if (HMON.preloaded) return;
-  HMON.preloaded = 1;
-  Object.entries(HERO_AVATAR.anims).forEach(([a, n]) => {
-    for (let i = 0; i < n; i++) { const im = new Image(); im.src = `mon/hero_${a}_${i}.png`; }
+  if (HMON.preloaded[HERO_CUR.key]) return;
+  HMON.preloaded[HERO_CUR.key] = 1;
+  Object.entries(HERO_CUR.anims).forEach(([a, n]) => {
+    for (let i = 0; i < n; i++) { const im = new Image(); im.src = `mon/${HERO_CUR.key}_${a}_${i}.png`; }
   });
 }
 const MON = { t: null, cfg: null, preloaded: 0 };
@@ -806,7 +816,7 @@ const BOSS_PRESETS = [
 ];
 function bossPortrait(n) { // web-avatar boss (every floor); procedural SVG kept as fallback art
   const a = bossAssetOf(n);
-  if (a) return `<img id="boss-img" class="boss-img" src="mon/${a.key}_battle_0.png" style="${a.css}${a.filter ? `;filter:${a.filter}` : ""}">`;
+  if (a) return `<img id="boss-img" class="boss-img${a.smooth ? "" : " pixel"}" src="mon/${a.key}_battle_0.png" style="${a.css}${a.filter ? `;filter:${a.filter}` : ""}">`;
   return bossSVG(n);
 }
 function bossSVG(n) {
@@ -1081,9 +1091,11 @@ const killReward = n => Math.round(100 * Math.pow(1.35, n)); // one kill ≈ 0.5
 const killCxp = n => Math.round(50 * Math.pow(1.35, n));
 const cxpNeed = lv => Math.round(120 * Math.pow(1.4, lv));
 // 称号随战斗等级进阶（每 3 级一换）
-const HERO_TITLES = ["夜读学徒", "见习剑士", "夜读剑客", "巡塔猎人", "斩词者", "破阵剑豪",
-  "百战游侠", "塔层征服者", "深渊行者", "剑术宗师", "无双剑圣", "词海剑仙"];
-const titleOf = g => HERO_TITLES[Math.min(Math.floor((g.clv || 0) / 3), HERO_TITLES.length - 1)];
+// 称号随勇者形态阶梯演进，与立绘一致（夜读 → 重甲 → 剑皇）
+const titleOf = g => {
+  const f = heroFormFor(g), clv = (g && g.clv) || 0;
+  return f.titles[Math.min(Math.floor((clv - f.min) / 3), f.titles.length - 1)];
+};
 const REBIRTH_FLOOR = 25; // reaching this floor unlocks rebirth — numbers never exceed ~百万
 const effAtk = g => Math.round(atkOf(g.weapon) * (1 + 0.05 * (g.clv || 0)) * (1 + 0.25 * (g.reborn || 0)));
 const heroMaxHp = g => Math.round(maxHpOf(g.armor) * (1 + 0.04 * (g.clv || 0)));
@@ -2041,7 +2053,7 @@ function renderDashboard() {
       <div class="card">
         <h3>⚔️ 打怪塔</h3>
         <div class="dash-boss-row">
-          ${(a => a ? `<img class="boss-img boss-img-dash" src="mon/${a.key}_battle_0.png" style="${a.filter ? `filter:${a.filter}` : ""}">` : bossSVG(g.bossIndex))(bossAssetOf(g.bossIndex))}
+          ${(a => a ? `<img class="boss-img boss-img-dash${a.smooth ? "" : " pixel"}" src="mon/${a.key}_battle_0.png" style="${a.filter ? `filter:${a.filter}` : ""}">` : bossSVG(g.bossIndex))(bossAssetOf(g.bossIndex))}
           <div style="flex:1;min-width:0">
             <b style="font-size:13.5px">${esc(bossOf(g.bossIndex).name)}</b> <span class="muted" style="font-size:11px">Lv.${g.bossIndex}</span>
             <div class="hp-bar"><div class="hp-boss" style="width:${Math.round((g.bossHp / bossMaxHp(g.bossIndex)) * 100)}%"></div></div>
@@ -2354,6 +2366,20 @@ function setFace(sel, face, ms) {
   if (ms) el._faceT = setTimeout(() => { el.dataset.face = "normal"; }, ms);
 }
 
+// 受击特效锚点：定位到该立绘「非透明像素质心」(hit:[fx,fy])，特效不再落在容器中心而偏离角色
+function spriteFxHost(sel) {
+  const host = document.querySelector(sel);
+  if (!host) return null;
+  const img = host.querySelector("img");
+  let anchor = host.querySelector(":scope > .fx-anchor");
+  if (!anchor) { anchor = document.createElement("div"); anchor.className = "fx-anchor"; host.appendChild(anchor); }
+  if (img) {
+    const hit = (sel === "#hero-sprite" ? (HERO_CUR && HERO_CUR.hit) : (MON.cfg && MON.cfg.hit)) || [0.5, 0.58];
+    anchor.style.left = (img.offsetLeft + hit[0] * img.offsetWidth) + "px";
+    anchor.style.top = (img.offsetTop + hit[1] * img.offsetHeight) + "px";
+  }
+  return anchor;
+}
 function hitFx(sel, cls) {
   const el = document.querySelector(sel);
   if (!el) return;
@@ -2362,13 +2388,14 @@ function hitFx(sel, cls) {
   el.classList.add(cls);
 }
 function floatDmg(text, crit, sel = "#boss-sprite") {
-  const host = document.querySelector(sel);
+  const sprite = document.querySelector(sel);
+  const host = spriteFxHost(sel);
   if (!host) return;
   const s = document.createElement("span");
   s.className = "dmg-float" + (crit ? " dmg-crit" : "");
   s.textContent = text;
   host.appendChild(s);
-  host.classList.remove("boss-hit"); void host.offsetWidth; host.classList.add("boss-hit");
+  if (sprite) { sprite.classList.remove("boss-hit"); void sprite.offsetWidth; sprite.classList.add("boss-hit"); }
   setTimeout(() => s.remove(), 700);
 }
 
@@ -2713,7 +2740,7 @@ function spawnGhosts(spotSel, spriteSel) {
   }
 }
 function spawnSparks(sel, color, n) {
-  const host = document.querySelector(sel);
+  const host = spriteFxHost(sel);
   if (!host) return;
   for (let i = 0; i < (n || 7); i++) {
     const s = document.createElement("div");
@@ -2728,7 +2755,7 @@ function spawnSparks(sel, color, n) {
   }
 }
 function spawnShockwave(sel) {
-  const host = document.querySelector(sel);
+  const host = spriteFxHost(sel);
   if (!host) return;
   const d = document.createElement("div");
   d.className = "shockwave";
@@ -2772,12 +2799,12 @@ function renderStatuses() {
 
 // ── designed move sets: hand-tuned timing, trail and impact per move ──
 const HERO_MOVES = [
-  { id: "heng", name: "横劈", dur: 950, hits: [{ at: 470, mult: 1.0, trail: "hslash" }] },
-  { id: "shu", name: "竖劈", dur: 980, hits: [{ at: 500, mult: 1.0, trail: "vslash" }] },
-  { id: "xie", name: "交叉斩", dur: 1080, hits: [{ at: 430, mult: 0.52, trail: "diag1" }, { at: 640, mult: 0.52, trail: "diag2" }] },
-  { id: "ci", name: "突刺", dur: 860, hits: [{ at: 420, mult: 1.0, trail: "thrust" }] },
-  { id: "lian", name: "连斩", dur: 1180, hits: [{ at: 380, mult: 0.26, trail: "mini1" }, { at: 520, mult: 0.26, trail: "mini2" }, { at: 660, mult: 0.26, trail: "mini1" }, { at: 800, mult: 0.26, trail: "mini2" }] },
-  { id: "hui", name: "回旋斩", dur: 1020, hits: [{ at: 560, mult: 1.08, trail: "circle" }] },
+  { id: "heng", anim: "atk1", name: "横劈", dur: 950, hits: [{ at: 470, mult: 1.0, trail: "hslash" }] },
+  { id: "shu", anim: "atk2", name: "竖劈", dur: 980, hits: [{ at: 500, mult: 1.0, trail: "vslash" }] },
+  { id: "xie", anim: "atk3", name: "交叉斩", dur: 1080, hits: [{ at: 430, mult: 0.52, trail: "diag1" }, { at: 640, mult: 0.52, trail: "diag2" }] },
+  { id: "ci", anim: "atk1", name: "突刺", dur: 860, hits: [{ at: 420, mult: 1.0, trail: "thrust" }] },
+  { id: "lian", anim: "atk3", name: "连斩", dur: 1180, hits: [{ at: 380, mult: 0.26, trail: "mini1" }, { at: 520, mult: 0.26, trail: "mini2" }, { at: 660, mult: 0.26, trail: "mini1" }, { at: 800, mult: 0.26, trail: "mini2" }] },
+  { id: "hui", anim: "atk2", name: "回旋斩", dur: 1020, hits: [{ at: 560, mult: 1.08, trail: "circle" }] },
 ];
 const BOSS_MOVES = [
   { id: "zhuang", name: "撞击", dur: 820, hits: [{ at: 430, mult: 1.0, trail: "slam" }] },
@@ -2798,7 +2825,7 @@ const TRAIL_TEX = {
   slam: { tex: "muzzle_04.png", rot: 0, sx: 1.5, sy: 1.5 },
 };
 function spawnTrail(sel, type, color) {
-  const host = document.querySelector(sel);
+  const host = spriteFxHost(sel);
   const cfg = TRAIL_TEX[type];
   if (!host || !cfg) return;
   const d = document.createElement("div");
@@ -3084,7 +3111,7 @@ async function performMove(view, side, move) {
   applyAnim(sel, ["mv-" + move.id], move.dur);
   if (side === "hero") {
     setFace("#hero-sprite", "attack", move.dur); // gritted look mid-move
-    heroAnim(["atk1", "atk2", "atk3"][(move.id.charCodeAt(0) + move.id.length) % 3], true);
+    heroAnim(move.anim || "atk1", true); // 动作绑定招式名（横劈/竖劈/突刺…），不再随机
   } else assetBossAnim(MON.cfg && MON.cfg.anims.atk2 && Math.random() < 0.5 ? "atk2" : "atk", true); // asset boss lunges
   const blocked = Math.random() < (side === "hero" ? 0.12 : 0.15); // defender raises the shield
   let t = 0;
@@ -3187,7 +3214,7 @@ function stageShake() {
   setTimeout(() => st.classList.remove("shake"), 220);
 }
 function spawnShards(sel, color, n) {
-  const host = document.querySelector(sel);
+  const host = spriteFxHost(sel);
   if (!host) return;
   for (let i = 0; i < (n || 6); i++) {
     const s = document.createElement("div");
@@ -3214,7 +3241,7 @@ function onCollision(attSel, defSel, maxMs, cb) {
   }, 40);
 }
 function spawnImpact(sel, color, big) {
-  const host = document.querySelector(sel);
+  const host = spriteFxHost(sel);
   if (!host) return;
   const r = document.createElement("div");
   r.className = "fx-burst" + (big ? " fx-burst-big" : "");
@@ -3243,6 +3270,7 @@ function battlePatchLive(view, s, dmg, crit) {
 
 function renderBattle() {
   const view = $("#battle-pane");
+  HERO_CUR = heroFormFor(getGame()); // 勇者形态随战斗等级
   const { Q, B, allDone, extra, g } = settleTower();
   const boss = bossOf(g.bossIndex);
   const bMax = bossMaxHp(g.bossIndex);
@@ -3283,7 +3311,7 @@ function renderBattle() {
       <div class="bgs bg-on" id="bg-a"><div class="bg-strip bg-far"></div><div class="bg-strip bg-near"></div></div>
       <div class="bgs" id="bg-b"><div class="bg-strip bg-far"></div><div class="bg-strip bg-near"></div></div>
       <div class="spot spot-boss idle-b"><div class="intent hidden" id="boss-intent"></div><div class="sprite" id="boss-sprite">${bossPortrait(g.bossIndex)}</div></div>
-      <div class="spot spot-hero idle-h"><div class="sprite" id="hero-sprite"><img id="hero-img" class="hero-img" src="mon/hero_idle_0.png" style="filter:drop-shadow(0 0 7px ${bladeColor(g.weapon)})"></div></div>
+      <div class="spot spot-hero idle-h"><div class="sprite" id="hero-sprite"><img id="hero-img" class="hero-img" src="mon/${HERO_CUR.key}_idle_0.png" style="${HERO_CUR.css};filter:drop-shadow(0 0 7px ${bladeColor(g.weapon)})${(g.reborn || 0) ? ` drop-shadow(0 0 12px #ffd24a)` : ""}"></div></div>
     </div>
 
     <div class="card">

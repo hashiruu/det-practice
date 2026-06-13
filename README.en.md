@@ -21,9 +21,10 @@ Answer questions to earn energy → energy powers your hero's auto-battle → sl
 ## 🎮 How the game works
 
 - **⚔️ Boss Tower**: turn-based auto-combat — your hero unleashes hand-choreographed sword combos while monsters charge and counter, and shield blocks throw sparks. Battle time is earned only by studying: **1 answered question = 30 seconds**
-- **60+ bosses** from CC0 animated avatars (goblin, skeleton, fire serpent, zombie, evil wizard, oni, dark knight, dragon…), recolored into elite variants every cycle — azure, amethyst, gold, crimson, emerald
+- **100+ bosses** from CC0 animated avatars (goblin, skeleton, fire serpent, zombie, evil wizard, oni, dark knight, dragon…), recolored into elite variants every cycle — azure, amethyst, gold, crimson, emerald
 - **Today's accuracy = today's crit rate** — study sharper, hit harder
 - **Gear & progression**: a feather shop upgrades weapons and armor (blades change shape and color by tier), plus combat levels and a title ladder
+- **Hero evolution**: the protagonist unlocks 3 hi-res forms by combat level — night-owl swordsman → armored champion → sword-king — gaining a golden aura after rebirth
 - **🌀 Rebirth / prestige**: past floor 25, rebirth keeps your combat level and stacks permanent damage — the numbers never inflate
 - **Living battlefield**: 7 chiptune tracks cross-fade on every kill while you march through procedurally generated biomes (outdoors, blue sky, ruins, desert, snow, night city)
 - **Daily quests**: quest rings, streaks, XP levels and a badge wall — 15–30 min a day, evenly covering every task type

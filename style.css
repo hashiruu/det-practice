@@ -1116,8 +1116,8 @@ input[type=text].ctest-input {
 
 /* ───── textured VFX (Kenney CC0 particles, mask-tinted) ───── */
 .fx-tex {
-  position: absolute; inset: -22%; pointer-events: none; z-index: 7;
-  animation: fxTexA 0.33s ease-out forwards;
+  position: absolute; left: 0; top: 0; width: 104px; height: 104px; margin: -52px 0 0 -52px;
+  pointer-events: none; z-index: 7; animation: fxTexA 0.33s ease-out forwards;
 }
 .fx-tex img, .fx-burst img, .dust img {
   width: 100%; height: 100%; object-fit: contain; display: block;
@@ -1267,8 +1267,9 @@ mark.fix-good { background: rgba(76, 217, 130, 0.22); color: #8fe6a8; font-weigh
 .boss-img-dash { width: 110%; margin: -6% 0 0 -8%; }
 
 /* —— 勇者 web avatar（CC0 Fantasy Warrior）：像素帧 + 武器色辉光 —— */
-.hero-img { width: 215%; max-width: none; display: block; margin-left: -55%; margin-top: -58%;
-  image-rendering: pixelated; }
+.hero-img { max-width: none; display: block; image-rendering: pixelated; }
+/* 像素怪锐化：小尺寸像素立绘默认会被双线性放大成糊，pixelated 让其保持清晰大像素；Cethiel 平滑龙/尸鬼不加(.pixel) */
+.boss-img.pixel { image-rendering: pixelated; }
 
 /* —— 左右分屏：仅在 边打边刷 页生效（#main.split），其余页面全宽原版 —— */
 #battle-pane { display: none; }
@@ -1299,3 +1300,9 @@ mark.fix-good { background: rgba(76, 217, 130, 0.22); color: #8fe6a8; font-weigh
 #goal-modal .goal-card { width: min(420px, 92vw); }
 #goal-modal .goal-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin: 10px 0; font-size: 14px; }
 #goal-modal input { width: 150px; }
+
+
+/* 受击特效锚点（0 尺寸，定位到角色质心）；所有攻击特效像素化以匹配像素立绘 */
+.fx-anchor { position: absolute; width: 0; height: 0; pointer-events: none; z-index: 6; }
+.fx-tex img, .fx-burst img, .dust img, .ghost-img,
+.impact, .impact-big, .shard, .spark, .shockwave { image-rendering: pixelated; }
