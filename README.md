@@ -69,14 +69,15 @@ node server.js          # http://localhost:8090
 
 录音依赖 HTTPS（浏览器限制）：建议 [Tailscale Serve](https://tailscale.com/kb/1242/tailscale-serve) 或任意反向代理。
 
-## 🎨 素材致谢（均为 CC0 公有领域）
+## 🎨 素材致谢（开放许可素材，立绘/音频均为 CC0）
 
 - 音效：[Kenney](https://kenney.nl) Impact Sounds / RPG Audio · [RPG Sound Pack](https://opengameart.org/content/rpg-sound-pack)（artisticdude）
 - 粒子贴图：Kenney Particle Pack
 - BGM：Juhani Junkala [5 Chiptunes (Action)](https://opengameart.org/content/5-chiptunes-action) + [4 Chiptunes (Adventure)](https://opengameart.org/content/4-chiptunes-adventure)
-- 勇者：[Fantasy Warrior](https://luizmelo.itch.io/fantasy-warrior)（LuizMelo）；像素怪物：LuizMelo 各 CC0 包
+- 勇者 + 30+ 像素角色/怪物/野犬立绘：[LuizMelo](https://luizmelo.itch.io) 的多个 **CC0** 包（Fantasy Warrior、Hero Knight、Martial Hero、Evil Wizard、Huntress、Medieval King/Warrior、Monsters Creatures Fantasy、Pet Dogs 等）
 - 动画 BOSS：Cethiel [Dragon](https://opengameart.org/content/dragon-fully-animated) / [Zombie - Fully Animated](https://opengameart.org/content/zombie-fully-animated)
 - 背景、特效编排、程序化像素生成器为本项目原创
+- 字体：Fredoka & Nunito（**SIL Open Font License**，经 Google Fonts 加载）
 
 ## 📄 License
 

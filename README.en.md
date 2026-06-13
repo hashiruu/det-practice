@@ -67,14 +67,15 @@ node server.js          # http://localhost:8090
 
 Microphone access requires HTTPS (browser restriction): use [Tailscale Serve](https://tailscale.com/kb/1242/tailscale-serve) or any reverse proxy.
 
-## 🎨 Asset credits (all CC0 public domain)
+## 🎨 Asset credits (open-licensed; all sprites/audio are CC0)
 
 - SFX: [Kenney](https://kenney.nl) Impact Sounds / RPG Audio · [RPG Sound Pack](https://opengameart.org/content/rpg-sound-pack) (artisticdude)
 - Particles: Kenney Particle Pack
 - BGM: Juhani Junkala [5 Chiptunes (Action)](https://opengameart.org/content/5-chiptunes-action) + [4 Chiptunes (Adventure)](https://opengameart.org/content/4-chiptunes-adventure)
-- Hero: [Fantasy Warrior](https://luizmelo.itch.io/fantasy-warrior) (LuizMelo); pixel monsters: assorted CC0 packs by LuizMelo
+- Hero + 30+ pixel character/monster/feral-dog avatars: multiple **CC0** packs by [LuizMelo](https://luizmelo.itch.io) (Fantasy Warrior, Hero Knight, Martial Hero, Evil Wizard, Huntress, Medieval King/Warrior, Monsters Creatures Fantasy, Pet Dogs, …)
 - Animated bosses: Cethiel [Dragon](https://opengameart.org/content/dragon-fully-animated) / [Zombie - Fully Animated](https://opengameart.org/content/zombie-fully-animated)
 - Backgrounds, effect choreography and the procedural pixel generators are original to this project
+- Fonts: Fredoka & Nunito (**SIL Open Font License**, loaded via Google Fonts)
 
 ## 📄 License
 

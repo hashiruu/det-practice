@@ -545,6 +545,12 @@ const ASSET_BOSSES = [
   { key: "mcf2bat", species: "噬魂蝠", icon: "🦇", growl: "bat", anims: { battle: 11, atk: 11, hurt: 3, die: 4 }, speed: { battle: 180, atk: 80, hurt: 110, die: 130 }, css: "width:90%" },
   { key: "mcf2rat", species: "瘟疫巨鼠", icon: "🐀", growl: "slime", anims: { battle: 10, atk: 12, hurt: 3, die: 6, run: 8 }, speed: { battle: 180, atk: 80, hurt: 110, die: 130, run: 90 }, css: "width:125%" },
   { key: "wizp", species: "奥术法师", icon: "🔮", growl: "shadow", anims: { battle: 7, atk: 9, atk2: 9, hurt: 4, die: 8, run: 9 }, speed: { battle: 180, atk: 80, atk2: 80, hurt: 110, die: 130, run: 90 }, css: "width:112%" },
+  { key: "dsbern", species: "圣伯纳巨獒", icon: "🐕", growl: "troll", anims: { battle: 10, atk: 3, hurt: 1, die: 3, run: 8 }, speed: { battle: 170, atk: 120, hurt: 110, die: 160, run: 80 }, css: "width:80%" },
+  { key: "ddane", species: "大丹猎犬", icon: "🐕", growl: "troll", anims: { battle: 10, atk: 3, hurt: 1, die: 3, run: 8 }, speed: { battle: 170, atk: 120, hurt: 110, die: 160, run: 80 }, css: "width:80%" },
+  { key: "dgold", species: "狂躁金毛", icon: "🦮", growl: "troll", anims: { battle: 10, atk: 3, hurt: 1, die: 3, run: 8 }, speed: { battle: 170, atk: 120, hurt: 110, die: 160, run: 80 }, css: "width:80%" },
+  { key: "dakita", species: "秋田斗犬", icon: "🐕", growl: "troll", anims: { battle: 10, atk: 3, hurt: 1, die: 3, run: 8 }, speed: { battle: 170, atk: 120, hurt: 110, die: 160, run: 80 }, css: "width:80%" },
+  { key: "dschn", species: "雪纳瑞利齿", icon: "🐩", growl: "troll", anims: { battle: 10, atk: 3, hurt: 1, die: 3, run: 8 }, speed: { battle: 170, atk: 120, hurt: 110, die: 160, run: 80 }, css: "width:80%" },
+  { key: "dhusky", species: "哈士奇狼", icon: "🐺", growl: "troll", anims: { battle: 10, atk: 3, hurt: 1, die: 3, run: 8 }, speed: { battle: 170, atk: 120, hurt: 110, die: 160, run: 80 }, css: "width:80%" },
 ];
 // 变色变体：紫龙、蓝龙、黄金哥布林……同一物种逐轮换色换名
 const BOSS_VARIANTS = [
