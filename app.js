@@ -2781,12 +2781,52 @@ function spawnShockwave(sel) {
 }
 
 // ── boss intent telegraph + status chips ──
+// —— 战斗微调（手动翻转/位置/间距，存档记住，跨设备同步）——
+const getFx = () => { const d = J(localStorage.getItem("det_combatfx")) || {}; return { flipH: d.flipH || {}, flipB: d.flipB || {}, hx: d.hx || 0, hy: d.hy || 0, bx: d.bx || 0, by: d.by || 0 }; };
+const saveFx = f => localStorage.setItem("det_combatfx", JSON.stringify(f));
+function applyCombatFx() {
+  const f = getFx(), g = getGame();
+  const hk = (HERO_CUR && HERO_CUR.key) || "hero";
+  const ba = bossAssetOf(g.bossIndex), bk = ba && ba.key;
+  const hImg = document.getElementById("hero-img"), bImg = document.getElementById("boss-img");
+  if (hImg) hImg.style.transform = f.flipH[hk] ? "scaleX(-1)" : "";
+  if (bImg) bImg.style.transform = (bk && f.flipB[bk]) ? "scaleX(-1)" : "";
+  const hs = document.querySelector(".spot-hero"), bs = document.querySelector(".spot-boss");
+  if (hs) { hs.style.marginLeft = (f.hx || 0) + "px"; hs.style.marginTop = (f.hy || 0) + "px"; }
+  if (bs) { bs.style.marginRight = (f.bx || 0) + "px"; bs.style.marginTop = (f.by || 0) + "px"; }
+}
+function bindCombatFx(view) {
+  view.querySelectorAll("[data-fx]").forEach(btn => btn.onclick = () => {
+    const f = getFx(), g = getGame();
+    const hk = (HERO_CUR && HERO_CUR.key) || "hero";
+    const ba = bossAssetOf(g.bossIndex), bk = ba && ba.key, S = 12, a = btn.dataset.fx;
+    if (a === "fliphero") f.flipH[hk] = !f.flipH[hk];
+    else if (a === "flipboss") { if (bk) f.flipB[bk] = !f.flipB[bk]; }
+    else if (a === "h-left") f.hx -= S; else if (a === "h-right") f.hx += S;
+    else if (a === "h-up") f.hy -= S; else if (a === "h-down") f.hy += S;
+    else if (a === "b-left") f.bx += S; else if (a === "b-right") f.bx -= S;
+    else if (a === "b-up") f.by -= S; else if (a === "b-down") f.by += S;
+    else if (a === "closer") { f.hx += S; f.bx += S; }
+    else if (a === "farther") { f.hx -= S; f.bx -= S; }
+    else if (a === "reset") { f.flipH = {}; f.flipB = {}; f.hx = f.hy = f.bx = f.by = 0; }
+    saveFx(f); applyCombatFx();
+  });
+}
 function showIntent(move, s) {
   const el = document.querySelector("#boss-intent");
   if (!el) return;
   const est = Math.round(bossAtk(s.bossIndex) * move.hits.reduce((a, h) => a + h.mult, 0));
-  el.innerHTML = `${move.id === "zhuang" ? "💢" : "🪓"} ${move.name} <b>~${est}</b>`;
+  const nm = (MON.cfg && MON.cfg.skill) || move.name; // 显示怪物真实技能名
+  el.innerHTML = `⚠ ${nm} <b>~${fmtNum(est)}</b>`;
   el.classList.remove("hidden");
+  // 下回合意图预告放到怪物脚底（不在头上）
+  const sprite = document.querySelector("#boss-sprite"), img = sprite && sprite.querySelector("img");
+  if (img && img.offsetWidth) {
+    const hit = (MON.cfg && MON.cfg.hit) || [0.5, 0.55];
+    el.style.left = (sprite.offsetLeft + img.offsetLeft + hit[0] * img.offsetWidth) + "px";
+    el.style.top = (sprite.offsetTop + img.offsetTop + img.offsetHeight + 4) + "px";
+    el.style.bottom = "auto";
+  }
 }
 function hideIntent() {
   const el = document.querySelector("#boss-intent");
@@ -3361,7 +3401,7 @@ function renderBattle() {
     </div>
     <div class="battle-status">
       <div class="plate plate-hero">
-        <b>🦉 ${titleOf(g)} <span style="color:var(--warn)">⚔Lv.${g.clv || 0}</span>${(g.reborn || 0) ? ` <span style="color:var(--accent2)">🌀×${g.reborn}</span>` : ""}</b>${down ? ' <span class="result-bad">被打倒</span>' : ""}
+        <b>🦉 ${titleOf(g)} <span style="color:var(--warn)">⚔Lv.${g.clv || 0}</span>${(g.reborn || 0) ? ` <span style="color:var(--accent2)">🌀×${g.reborn}</span>` : ""}</b>${down ? ' <span class="result-bad">被打倒</span>' : ""}<button class="fx-flip" data-fx="fliphero" title="左右翻转勇者">🔄</button>
         <div class="hp-bar"><div class="hp-me" id="bt-myhp-bar" style="width:${Math.round((g.hp / pMax) * 100)}%"></div></div>
         <div class="xp-mini" title="经验：${xpTotal()} XP"><div style="width:${levelInfo(xpTotal()).pct}%"></div></div>
         <span class="muted">❤️ <span id="bt-myhp">${fmtNum(g.hp)}</span> / ${fmtNum(pMax)} · 🪶 <b style="color:var(--warn)" id="bt-coins">${fmtNum(g.coins)}</b> · ⚡ <b style="color:var(--accent2)" id="bt-energy">${fmt(Math.ceil(g.energy || 0))}</b></span><span id="st-hero"></span>
@@ -3369,7 +3409,7 @@ function renderBattle() {
         🛡 ${armorName(g.armor)} · 💥 暴击率 <b style="color:var(--warn)">${Math.round(todayAccuracy() * 100)}%</b> · 升级还需 ${fmtNum(cxpNeed(g.clv || 0) - (g.cxp || 0))} 击杀经验</div>
       </div>
       <div class="plate plate-boss">
-        <b>${esc(boss.name)}</b> <span class="muted">Lv.${boss.lvl}</span>
+        <b>${esc(boss.name)}</b> <span class="muted">Lv.${boss.lvl}</span><button class="fx-flip" data-fx="flipboss" title="左右翻转怪物">🔄</button>
         <div class="hp-bar"><div class="hp-boss" id="bt-bosshp-bar" style="width:${Math.round((g.bossHp / bMax) * 100)}%"></div></div>
         <span class="muted">❤️ <span id="bt-bosshp">${fmtNum(g.bossHp)}</span> / ${fmtNum(bMax)}</span><span id="st-boss"></span>
         <div class="plate-gear muted">⚔️ 攻击 ~${fmtNum(Math.round(bossAtk(g.bossIndex)))} · 🪶 击杀掉落 +${fmtNum(killReward(g.bossIndex))} · 击杀经验 +${fmtNum(Math.round(killCxp(g.bossIndex)))}</div>
@@ -3381,6 +3421,14 @@ function renderBattle() {
       <div class="spot spot-boss idle-b"><div class="intent hidden" id="boss-intent"></div><div class="sprite" id="boss-sprite">${bossPortrait(g.bossIndex)}</div></div>
       <div class="spot spot-hero idle-h"><div class="sprite" id="hero-sprite"><img id="hero-img" class="hero-img" src="mon/${HERO_CUR.key}_idle_0.png" style="${HERO_CUR.css};filter:drop-shadow(0 3px 3px rgba(0,0,0,0.45))"></div></div>
     </div>
+    <details class="fx-tune">
+      <summary>⚙ 战斗微调 · 翻转 / 位置 / 间距（手动调一次，存档永久记住，不再被自动识别搞反）</summary>
+      <div class="fx-grid">
+        <span>勇者</span><button data-fx="fliphero">🔄 翻转</button><button data-fx="h-left">◀</button><button data-fx="h-right">▶</button><button data-fx="h-up">▲</button><button data-fx="h-down">▼</button>
+        <span>怪物</span><button data-fx="flipboss">🔄 翻转</button><button data-fx="b-left">◀</button><button data-fx="b-right">▶</button><button data-fx="b-up">▲</button><button data-fx="b-down">▼</button>
+        <span>间距</span><button data-fx="closer">－ 拉近</button><button data-fx="farther">＋ 拉远</button><button data-fx="reset">↺ 全部重置</button>
+      </div>
+    </details>
 
     <div class="card">
       <button class="primary" id="bt-auto" ${(g.energy || 0) <= 0 ? "disabled" : ""}>${BATTLE.running ? "⏸ 暂停自动战斗" : "▶ 开始自动战斗"}</button>
@@ -3493,6 +3541,8 @@ function renderBattle() {
     applyBattleFold();
   };
   applyBattleFold();
+  bindCombatFx(view);
+  applyCombatFx();
   patchBattleHUD(view);
 }
 
