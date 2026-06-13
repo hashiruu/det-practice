@@ -1332,3 +1332,6 @@ mark.fix-good { background: rgba(76, 217, 130, 0.22); color: #8fe6a8; font-weigh
   background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14); color: var(--text); }
 .fx-grid button:hover { border-color: var(--accent); background: var(--accent-dim, rgba(120,220,130,0.14)); }
 .fx-grid span + button { margin-right: 2px; }
+
+/* 缩放/翻转以脚底为原点，保持站地 */
+.boss-img, .hero-img { transform-origin: center bottom; }

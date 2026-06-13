@@ -2782,15 +2782,17 @@ function spawnShockwave(sel) {
 
 // ── boss intent telegraph + status chips ──
 // —— 战斗微调（手动翻转/位置/间距，存档记住，跨设备同步）——
-const getFx = () => { const d = J(localStorage.getItem("det_combatfx")) || {}; return { flipH: d.flipH || {}, flipB: d.flipB || {}, hx: d.hx || 0, hy: d.hy || 0, bx: d.bx || 0, by: d.by || 0 }; };
+let FX_FINE = false; // 步长精/粗
+const getFx = () => { const d = J(localStorage.getItem("det_combatfx")) || {}; return { flipH: d.flipH || {}, flipB: d.flipB || {}, scaleH: d.scaleH || {}, scaleB: d.scaleB || {}, hx: d.hx || 0, hy: d.hy || 0, bx: d.bx || 0, by: d.by || 0 }; };
 const saveFx = f => localStorage.setItem("det_combatfx", JSON.stringify(f));
 function applyCombatFx() {
   const f = getFx(), g = getGame();
   const hk = (HERO_CUR && HERO_CUR.key) || "hero";
   const ba = bossAssetOf(g.bossIndex), bk = ba && ba.key;
   const hImg = document.getElementById("hero-img"), bImg = document.getElementById("boss-img");
-  if (hImg) hImg.style.transform = f.flipH[hk] ? "scaleX(-1)" : "";
-  if (bImg) bImg.style.transform = (bk && f.flipB[bk]) ? "scaleX(-1)" : "";
+  const tf = (flip, sc) => `scale(${flip ? -sc : sc}, ${sc})`; // 翻转 + 缩放合一，origin 在脚底(CSS)
+  if (hImg) hImg.style.transform = tf(f.flipH[hk], f.scaleH[hk] || 1);
+  if (bImg) bImg.style.transform = tf(bk && f.flipB[bk], (bk && f.scaleB[bk]) || 1);
   const hs = document.querySelector(".spot-hero"), bs = document.querySelector(".spot-boss");
   if (hs) { hs.style.marginLeft = (f.hx || 0) + "px"; hs.style.marginTop = (f.hy || 0) + "px"; }
   if (bs) { bs.style.marginRight = (f.bx || 0) + "px"; bs.style.marginTop = (f.by || 0) + "px"; }
@@ -2799,16 +2801,22 @@ function bindCombatFx(view) {
   view.querySelectorAll("[data-fx]").forEach(btn => btn.onclick = () => {
     const f = getFx(), g = getGame();
     const hk = (HERO_CUR && HERO_CUR.key) || "hero";
-    const ba = bossAssetOf(g.bossIndex), bk = ba && ba.key, S = 12, a = btn.dataset.fx;
+    const ba = bossAssetOf(g.bossIndex), bk = ba && ba.key, a = btn.dataset.fx;
+    const S = FX_FINE ? 4 : 12, SC = FX_FINE ? 0.05 : 0.12;
+    if (a === "step") { FX_FINE = !FX_FINE; btn.textContent = "步长:" + (FX_FINE ? "精" : "粗"); return; }
     if (a === "fliphero") f.flipH[hk] = !f.flipH[hk];
     else if (a === "flipboss") { if (bk) f.flipB[bk] = !f.flipB[bk]; }
     else if (a === "h-left") f.hx -= S; else if (a === "h-right") f.hx += S;
     else if (a === "h-up") f.hy -= S; else if (a === "h-down") f.hy += S;
+    else if (a === "h-big") f.scaleH[hk] = Math.min(2.6, (f.scaleH[hk] || 1) + SC);
+    else if (a === "h-small") f.scaleH[hk] = Math.max(0.4, (f.scaleH[hk] || 1) - SC);
     else if (a === "b-left") f.bx += S; else if (a === "b-right") f.bx -= S;
     else if (a === "b-up") f.by -= S; else if (a === "b-down") f.by += S;
+    else if (a === "b-big") { if (bk) f.scaleB[bk] = Math.min(2.6, (f.scaleB[bk] || 1) + SC); }
+    else if (a === "b-small") { if (bk) f.scaleB[bk] = Math.max(0.4, (f.scaleB[bk] || 1) - SC); }
     else if (a === "closer") { f.hx += S; f.bx += S; }
     else if (a === "farther") { f.hx -= S; f.bx -= S; }
-    else if (a === "reset") { f.flipH = {}; f.flipB = {}; f.hx = f.hy = f.bx = f.by = 0; }
+    else if (a === "reset") { f.flipH = {}; f.flipB = {}; f.scaleH = {}; f.scaleB = {}; f.hx = f.hy = f.bx = f.by = 0; }
     saveFx(f); applyCombatFx();
   });
 }
@@ -3424,9 +3432,9 @@ function renderBattle() {
     <details class="fx-tune">
       <summary>⚙ 战斗微调 · 翻转 / 位置 / 间距（手动调一次，存档永久记住，不再被自动识别搞反）</summary>
       <div class="fx-grid">
-        <span>勇者</span><button data-fx="fliphero">🔄 翻转</button><button data-fx="h-left">◀</button><button data-fx="h-right">▶</button><button data-fx="h-up">▲</button><button data-fx="h-down">▼</button>
-        <span>怪物</span><button data-fx="flipboss">🔄 翻转</button><button data-fx="b-left">◀</button><button data-fx="b-right">▶</button><button data-fx="b-up">▲</button><button data-fx="b-down">▼</button>
-        <span>间距</span><button data-fx="closer">－ 拉近</button><button data-fx="farther">＋ 拉远</button><button data-fx="reset">↺ 全部重置</button>
+        <span>勇者</span><button data-fx="fliphero">🔄翻转</button><button data-fx="h-left" title="左移">◀</button><button data-fx="h-right" title="右移">▶</button><button data-fx="h-up" title="上移">▲</button><button data-fx="h-down" title="下移">▼</button><button data-fx="h-big" title="放大">🔍＋</button><button data-fx="h-small" title="缩小">🔍－</button>
+        <span>怪物</span><button data-fx="flipboss">🔄翻转</button><button data-fx="b-left" title="左移">◀</button><button data-fx="b-right" title="右移">▶</button><button data-fx="b-up" title="上移">▲</button><button data-fx="b-down" title="下移">▼</button><button data-fx="b-big" title="放大">🔍＋</button><button data-fx="b-small" title="缩小">🔍－</button>
+        <span>全局</span><button data-fx="closer">间距－</button><button data-fx="farther">间距＋</button><button data-fx="step">步长:粗</button><button data-fx="reset">↺ 全部重置</button>
       </div>
     </details>
 
