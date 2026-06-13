@@ -1308,3 +1308,13 @@ mark.fix-good { background: rgba(76, 217, 130, 0.22); color: #8fe6a8; font-weigh
 .impact, .impact-big, .shard, .spark, .shockwave { image-rendering: pixelated; }
 
 .fx-foot { position: absolute; width: 0; height: 0; pointer-events: none; z-index: 9; }
+
+/* —— 远程投射物（法球/箭矢）+ 施法姿态 —— */
+.projectile { position: absolute; width: 16px; height: 16px; margin: -8px 0 0 -8px;
+  background: var(--pc, #fff); border-radius: 3px; image-rendering: pixelated;
+  box-shadow: 0 0 8px var(--pc), 0 0 18px var(--pc), inset 0 0 4px #fff; pointer-events: none; z-index: 8; }
+.proj-arrow { width: 30px; height: 5px; margin: -2px 0 0 -15px; border-radius: 1px;
+  background: linear-gradient(90deg, transparent, var(--pc) 45%, #fff); box-shadow: 0 0 6px var(--pc); }
+.proj-beam { width: 22px; height: 10px; margin: -5px 0 0 -11px; border-radius: 5px; }
+.cast-pose { animation: castPose 0.55s ease; }
+@keyframes castPose { 28% { transform: translate(-10px, -4px) scale(1.05, 0.97); } 60% { transform: translateX(4px); } }
