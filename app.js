@@ -2794,8 +2794,8 @@ function applyCombatFx() {
   if (hImg) hImg.style.transform = tf(f.flipH[hk], f.scaleH[hk] || 1);
   if (bImg) bImg.style.transform = tf(bk && f.flipB[bk], (bk && f.scaleB[bk]) || 1);
   const hs = document.querySelector(".spot-hero"), bs = document.querySelector(".spot-boss");
-  if (hs) { hs.style.marginLeft = (f.hx || 0) + "px"; hs.style.marginTop = (f.hy || 0) + "px"; }
-  if (bs) { bs.style.marginRight = (f.bx || 0) + "px"; bs.style.marginTop = (f.by || 0) + "px"; }
+  if (hs) { hs.style.marginLeft = (f.hx || 0) + "px"; hs.style.marginBottom = (f.hy || 0) + "px"; } // 站位框 bottom 锚定→用 margin-bottom 上下移
+  if (bs) { bs.style.marginRight = (f.bx || 0) + "px"; bs.style.marginBottom = (f.by || 0) + "px"; }
 }
 function bindCombatFx(view) {
   view.querySelectorAll("[data-fx]").forEach(btn => btn.onclick = () => {
@@ -2807,11 +2807,11 @@ function bindCombatFx(view) {
     if (a === "fliphero") f.flipH[hk] = !f.flipH[hk];
     else if (a === "flipboss") { if (bk) f.flipB[bk] = !f.flipB[bk]; }
     else if (a === "h-left") f.hx -= S; else if (a === "h-right") f.hx += S;
-    else if (a === "h-up") f.hy -= S; else if (a === "h-down") f.hy += S;
+    else if (a === "h-up") f.hy += S; else if (a === "h-down") f.hy -= S;
     else if (a === "h-big") f.scaleH[hk] = Math.min(2.6, (f.scaleH[hk] || 1) + SC);
     else if (a === "h-small") f.scaleH[hk] = Math.max(0.4, (f.scaleH[hk] || 1) - SC);
     else if (a === "b-left") f.bx += S; else if (a === "b-right") f.bx -= S;
-    else if (a === "b-up") f.by -= S; else if (a === "b-down") f.by += S;
+    else if (a === "b-up") f.by += S; else if (a === "b-down") f.by -= S;
     else if (a === "b-big") { if (bk) f.scaleB[bk] = Math.min(2.6, (f.scaleB[bk] || 1) + SC); }
     else if (a === "b-small") { if (bk) f.scaleB[bk] = Math.max(0.4, (f.scaleB[bk] || 1) - SC); }
     else if (a === "closer") { f.hx += S; f.bx += S; }
