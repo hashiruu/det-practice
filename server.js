@@ -34,7 +34,7 @@ const server = http.createServer((req, res) => {
     req.on("data", c => { body += c; if (body.length > 100000) req.destroy(); });
     req.on("end", async () => {
       try {
-        const { system, user, max_tokens } = JSON.parse(body);
+        const { system, user, max_tokens, temperature } = JSON.parse(body);
         const env = loadEnv();
         if (!env.DEEPSEEK_API_KEY) throw new Error("DEEPSEEK_API_KEY not found");
         // deepseek-v4-pro is a reasoning model: thinking tokens count toward
@@ -56,7 +56,7 @@ const server = http.createServer((req, res) => {
                 { role: "system", content: sys },
                 { role: "user", content: String(user || "") },
               ],
-              temperature: 0.6,
+              temperature: Math.max(0, Math.min(1, temperature != null ? temperature : 0.6)), // 打分用低温减方差
               max_tokens: mt,
             }),
           });
