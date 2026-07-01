@@ -2019,6 +2019,39 @@ function tickPlan() {
 }
 setInterval(tickPlan, 1000);
 
+// ── DET Speaking ≥130 前置条件（逐条锚定官方 130-150 段描述，可勾选，det_prereq 同步）──
+const PREREQS = [
+  { id: "fill", cat: "内容", txt: "任何题型都能把时间说满：35s 不冷场，90s/3min 结构完整收尾", how: "即兴问答 + 压轴长答，每天各来一轮" },
+  { id: "detail", cat: "内容", txt: "每个观点必配一个具体例子或细节（官方：fully support the main ideas）", how: "口语教练的范文结构照着练" },
+  { id: "connect", cat: "组织", txt: "连接手段 ≥4 类自然使用（however / for example / which means / on top of that / if…then）", how: "AI 点评盯 coherence 星级" },
+  { id: "tpl", cat: "组织", txt: "结构模板内化：观点→理由1+例→理由2+例→收尾，不用想就出口", how: "口语教练关键词复述环节" },
+  { id: "wpm", cat: "流利", txt: "语速稳定 ≥110-120 wpm，不再 somewhat slow", how: "微练口语的语速读数" },
+  { id: "pause", cat: "流利", txt: "停顿只落在意群边界；无 >2 秒空白；每 30 秒重启 ≤1 次", how: "听自己录音回放数一遍" },
+  { id: "variety", cat: "语法", txt: "每答自然带出 ≥3 种结构：条件句 / 定语从句 / 被动 / 情态 / 让步", how: "句式挑战 + AI 点评 grammar 行" },
+  { id: "err", cat: "语法", txt: "个人高频错清零：三单 have→has、过去时 prepare→prepared；小错 ≤1 个/分钟", how: "荧光笔标注就是你的错误清单" },
+  { id: "chunk", cat: "词汇", txt: "活用口语搭配 ≥300 条，告别 very + 泛词（官方：collocations + idiomatic）", how: "口语好词自动进生词本，每天复习" },
+  { id: "para", cat: "词汇", txt: "同话题关键词会即时同义替换，不重复用词", how: "AI 点评 lexis 行给替换建议" },
+  { id: "stress", cat: "发音", txt: "词重音不出致命错，句子有重音节奏", how: "每天 5 分钟跟读任意英文播客" },
+  { id: "score", cat: "终检", txt: "AI 终判连续一周稳定 ≥130（微练 + 大题双线）", how: "作战室今日口语均分连看 7 天" },
+];
+const getPrereq = () => J(localStorage.getItem("det_prereq")) || {};
+function renderPrereqCard() {
+  const pq = getPrereq();
+  const done = PREREQS.filter(p => pq[p.id]).length;
+  return `
+  <div class="card prereq-card">
+    <h3>🎯 Speaking 130 前置条件 <span class="muted" style="font-size:13px">${done}/${PREREQS.length} 达成 · 全绿再上考场</span></h3>
+    <div class="progress-bar" style="height:10px;margin:10px 0"><div style="width:${Math.round(done / PREREQS.length * 100)}%;background:linear-gradient(90deg,var(--accent2),var(--accent))"></div></div>
+    ${PREREQS.map(p => `
+      <label class="pq-row ${pq[p.id] ? "pq-done" : ""}">
+        <input type="checkbox" data-pq="${p.id}" ${pq[p.id] ? "checked" : ""}>
+        <span class="pq-cat">${p.cat}</span>
+        <span class="pq-txt">${p.txt}<span class="pq-how muted">怎么练：${p.how}</span></span>
+      </label>`).join("")}
+    <p class="muted" style="font-size:12px;margin-top:8px">逐条锚定官方评分指南 130-150 段描述。自己达标了才勾——这是给考场的承诺，不是给我看的。</p>
+  </div>`;
+}
+
 function renderPlan() {
   const view = $("#view-plan");
   if (!view) return;
@@ -2119,6 +2152,8 @@ function renderPlan() {
     </div>
   </div>
 
+  ${renderPrereqCard()}
+
   <div class="card">
     <h3>🗺 作战阶段</h3>
     <div class="phase-row">
@@ -2138,6 +2173,12 @@ function renderPlan() {
 
   view.querySelectorAll("[data-view]").forEach(el => {
     el.onclick = () => document.querySelector(`.nav-item[data-view="${el.dataset.view}"]`).click();
+  });
+  view.querySelectorAll("[data-pq]").forEach(cb => cb.onchange = () => {
+    const pq = getPrereq(); pq[cb.dataset.pq] = cb.checked;
+    localStorage.setItem("det_prereq", JSON.stringify(pq));
+    renderPlan();
+    if (cb.checked) toast("🎯 又一条达成！");
   });
   ["exam1", "exam2", "deadline"].forEach(k => {
     const inp = view.querySelector("#pd-" + k);
