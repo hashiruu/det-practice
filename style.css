@@ -1264,7 +1264,7 @@ mark.fix-good { background: rgba(76, 217, 130, 0.22); color: #8fe6a8; font-weigh
 /* —— 动画素材 BOSS（CC0 古龙）：比像素怪更巨大，压向勇者 —— */
 .boss-img { width: 175%; max-width: none; display: block; margin-left: -45%; margin-top: -18%;
   filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.45)); }
-.boss-img-dash { width: 110%; margin: -6% 0 0 -8%; }
+.boss-img-dash { width: 86px; max-width: 86px; margin: 0; flex: 0 0 86px; align-self: flex-end; }
 
 /* —— 勇者 web avatar（CC0 Fantasy Warrior）：像素帧 + 武器色辉光 —— */
 .hero-img { max-width: none; display: block; image-rendering: pixelated; }
