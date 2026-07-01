@@ -310,7 +310,10 @@ function aiFeedbackButton(parent, label, buildMessages) {
   wrap.innerHTML = `<button class="secondary">🤖 ${esc(label)}</button><div class="ai-box hidden"></div>`;
   const btn = wrap.querySelector("button"), out = wrap.querySelector(".ai-box");
   btn.onclick = async () => {
-    btn.disabled = true; btn.textContent = "🤖 DeepSeek 思考中…";
+    btn.disabled = true;
+    let waitS = 0;
+    btn.textContent = "🤖 思考中… 0s";
+    const waitT = setInterval(() => { waitS += 1; btn.textContent = `🤖 思考中… ${waitS}s${waitS > 60 ? "（推理模型较慢，请稍候）" : ""}`; }, 1000);
     out.classList.remove("hidden"); out.textContent = "…";
     try {
       const { system, user, maxTokens } = buildMessages();
@@ -322,11 +325,13 @@ function aiFeedbackButton(parent, label, buildMessages) {
         harvested = addVocab(vm[1].split(/[,，;；]/), "AI点评");
         content = content.replace(/^\s*`?VOCAB[:：].*$/im, "").trim();
       }
+      clearInterval(waitT);
       out.innerHTML = mdLite(content) + (harvested ? `<br><span class="muted">📒 ${harvested} 个表达已自动加入生词本</span>` : "");
       btn.classList.add("hidden");
     } catch (e) {
-      out.innerHTML = `<span class="result-bad">AI 点评失败：${esc(String(e.message || e))}</span>`;
-      btn.disabled = false; btn.textContent = `🤖 ${label}`;
+      clearInterval(waitT);
+      out.innerHTML = `<span class="result-bad">AI 点评失败：${esc(String(e.message || e))} —— 点按钮重试</span>`;
+      btn.disabled = false; btn.textContent = `🤖 ${label}（重试）`;
     }
   };
   parent.appendChild(wrap);
@@ -1261,6 +1266,7 @@ function speakingTask(cfg) {
     aiFeedbackButton(extra, "AI 点评（DeepSeek）", () => ({
       system: SPEAK_RATER,
       user: `题型：${cfg.title}（限时 ${cfg.speakSec} 秒）\n题目：${cfg.promptText ? cfg.promptText(item) : "(看图描述)"}\n考生回答（语音转写）：\n${ta.value.trim() || "(空)"}${challenge ? challengeClause(challenge) : ""}`,
+      maxTokens: 3200,
     }));
     $("#sp-again", view).onclick = run;
     $("#sp-back", view).onclick = idle;
@@ -1360,6 +1366,7 @@ function setupIS() {
     aiFeedbackButton(extra, "AI 点评这一答（DeepSeek）", () => ({
       system: SPEAK_RATER,
       user: `题型：Interactive Speaking（35 秒即兴问答）\n问题：${q}\n考生回答（语音转写）：\n${ta.value.trim() || "(空)"}`,
+      maxTokens: 3200,
     }));
     $("#is-next", view).onclick = async () => {
       if (last) { session = { topic: drawFrom("istopic", DATA.interactiveSpeaking), history: [] }; ask(session.topic.questions[0]); return; }
@@ -3813,6 +3820,7 @@ function renderMiniBody(view) {
     aiFeedbackButton($("#sp-ai", body), "AI 详评上一答（可选，不打断节奏）", () => ({
       system: SPEAK_RATER,
       user: `题型：${MINI.lastCtx.type}（口语微练）\n题目：${MINI.lastCtx.q}\n考生回答（语音转写）：\n${MINI.lastCtx.text || "(空)"}`,
+      maxTokens: 3200,
     }));
   }
   body.querySelectorAll(".mini-tab").forEach(b => {

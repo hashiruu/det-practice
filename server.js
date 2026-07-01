@@ -45,8 +45,10 @@ const server = http.createServer((req, res) => {
         let content = "";
         for (let attempt = 0; attempt < 3 && !content; attempt++) {
           const sys = String(system || "") + (attempt > 0 ? "\n（重要：尽量减少思考，直接输出最终答案正文。）" : "");
+          const ac = new AbortController(); // 单次尝试 75s 超时：宁可快速失败重试，不能让前端无限等
+          const tt = setTimeout(() => ac.abort(), 75000);
           const r = await fetch(`${env.DEEPSEEK_BASE_URL || "https://api.deepseek.com"}/chat/completions`, {
-            method: "POST",
+            method: "POST", signal: ac.signal,
             headers: { "Content-Type": "application/json", Authorization: `Bearer ${env.DEEPSEEK_API_KEY}` },
             body: JSON.stringify({
               model: env.DEEPSEEK_MODEL || "deepseek-chat",
@@ -58,8 +60,8 @@ const server = http.createServer((req, res) => {
               max_tokens: mt,
             }),
           });
-          const j = await r.json();
-          if (!r.ok) throw new Error(j.error?.message || `upstream ${r.status}`);
+          const j = await r.json().finally(() => clearTimeout(tt));
+          if (!r.ok) { if (attempt < 2) continue; throw new Error(j.error?.message || `upstream ${r.status}`); }
           content = (j.choices[0].message.content || "").trim();
           mt = Math.min(mt * 2, 8000);
         }
