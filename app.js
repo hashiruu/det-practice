@@ -2053,7 +2053,9 @@ function renderDashboard() {
       <div class="card">
         <h3>⚔️ 打怪塔</h3>
         <div class="dash-boss-row">
-          ${(a => a ? `<img class="boss-img boss-img-dash${a.smooth ? "" : " pixel"}" src="mon/${a.key}_battle_0.png" style="${a.filter ? `filter:${a.filter}` : ""}">` : bossSVG(g.bossIndex))(bossAssetOf(g.bossIndex))}
+          ${(a => { if (!a) return bossSVG(g.bossIndex);
+            const f = getFx(), sc = (f.scaleB[a.key] || 1), tf = `transform:scale(${f.flipB[a.key] ? -sc : sc}, ${sc});transform-origin:center bottom`;
+            return `<img class="boss-img boss-img-dash${a.smooth ? "" : " pixel"}" src="mon/${a.key}_battle_0.png" style="${a.filter ? `filter:${a.filter};` : ""}${tf}">`; })(bossAssetOf(g.bossIndex))}
           <div style="flex:1;min-width:0">
             <b style="font-size:13.5px">${esc(bossOf(g.bossIndex).name)}</b> <span class="muted" style="font-size:11px">Lv.${g.bossIndex}</span>
             <div class="hp-bar"><div class="hp-boss" style="width:${Math.round((g.bossHp / bossMaxHp(g.bossIndex)) * 100)}%"></div></div>
