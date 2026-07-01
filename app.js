@@ -1985,6 +1985,152 @@ function renderGoalLine() {
   el.onclick = openGoalSetup;
 }
 
+// ═══════════ ⏰ 冲刺计划（Planning）：倒计时 + 压力仪表盘 + 每日打卡 ═══════════
+const getPlan = () => J(localStorage.getItem("det_plan")) || { exam1: "2026-06-15", exam2: "2026-08-04", deadline: "2026-08-07" };
+const savePlan = p => localStorage.setItem("det_plan", JSON.stringify(p));
+
+function cdParts(dateStr, endOfDay) {
+  const target = new Date(dateStr + (endOfDay ? "T23:59:59" : "T09:00:00"));
+  const ms = target - Date.now();
+  const days = Math.floor(ms / 86400000);
+  const h = Math.floor(ms % 86400000 / 3600000), m = Math.floor(ms % 3600000 / 60000), s = Math.floor(ms % 60000 / 1000);
+  return { ms, days, txt: ms <= 0 ? "已到" : days >= 3 ? `${days} 天` : `${days}天 ${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}` };
+}
+function tickPlan() {
+  document.querySelectorAll("[data-cd]").forEach(el => {
+    const { txt } = cdParts(el.dataset.cd, el.dataset.eod === "1");
+    const n = el.querySelector(".cd-num");
+    if (n && n.textContent !== txt) n.textContent = txt;
+  });
+}
+setInterval(tickPlan, 1000);
+
+function renderPlan() {
+  const view = $("#view-plan");
+  if (!view) return;
+  const p = getPlan();
+  const { Q, B, allDone, extra, g } = settleTower();
+  const doneCnt = Q.filter(q => q.done >= q.n).length;
+  const totalMin = Q.reduce((s, q) => s + q.time, 0);
+  const log = getLog();
+  const today = dayKey(Date.now());
+  const todayItems = log.filter(e => dayKey(e.t) === today).length;
+  const days = new Set(log.map(e => dayKey(e.t)));
+  const streak = calcStreak(days, today);
+  const xp = xpTotal(), lv = levelInfo(xp);
+  const sph = (J(localStorage.getItem("det_sphist")) || []).filter(e => e.t && dayKey(e.t) === today);
+  const spAvg = sph.length ? Math.round(sph.reduce((a, e) => a + (e.score || 0), 0) / sph.length) : null;
+  const spBest = sph.length ? Math.max(...sph.map(e => e.score || 0)) : null;
+
+  // 时间压力：今天已流逝 vs 打卡完成度
+  const dayFrac = (Date.now() - new Date(today + "T07:00:00")) / (16 * 3600000); // 7:00-23:00 算作战窗口
+  const df = Math.max(0, Math.min(1, dayFrac));
+  const qf = Q.length ? doneCnt / Q.length : 1;
+  const hourNow = new Date().getHours();
+  let status, statusCls;
+  if (allDone) { status = "✅ 今日任务已清零——去边打边刷或休息"; statusCls = "ok"; }
+  else if (hourNow >= 21) { status = "🚨 今晚必须清零！还剩 " + (Q.length - doneCnt) + " 项"; statusCls = "danger"; }
+  else if (qf >= df - 0.08) { status = "⏱ 进度跟得上，别松"; statusCls = "warn"; }
+  else { status = "⚠️ 你落后于今天的时间了——现在开始"; statusCls = "danger"; }
+
+  const cds = [
+    { label: "距首考", date: p.exam1, eod: 0 },
+    { label: "距二考", date: p.exam2, eod: 0 },
+    { label: "距提交死线", date: p.deadline, eod: 1 },
+  ].map(c => {
+    const { ms, days: d, txt } = cdParts(c.date, !!c.eod);
+    const urg = ms <= 0 ? "past" : d < 3 ? "danger" : d < 10 ? "warn" : "calm";
+    return { ...c, txt, urg, d };
+  });
+
+  const nextQ = Q.find(q => q.done < q.n);
+  const phases = [
+    { icon: "🔥", name: "冲刺首考", until: p.exam1, focus: "口语教练每天必做 · 至少 1 套限时模拟 · 睡前生词本过一遍" },
+    { icon: "🛠", name: "复盘补弱", until: p.exam2, focus: "首考出分后主攻最弱两项 · 错题本清零 · 口语微练保持手感" },
+    { icon: "📮", name: "提交冲线", until: p.deadline, focus: "二考出分立即送分 · 备齐并提交全部材料 · 不留到最后一天" },
+  ];
+  const nowMs = Date.now();
+  let cur = phases.findIndex(ph => nowMs <= new Date(ph.until + "T23:59:59"));
+  if (cur < 0) cur = phases.length - 1;
+
+  view.innerHTML = `
+  <h2>⏰ 冲刺作战室</h2>
+  <div class="cd-row">
+    ${cds.map(c => `
+      <div class="cd-card cd-${c.urg}" data-cd="${c.date}" data-eod="${c.eod}">
+        <div class="cd-title">${c.label} <span class="muted">${c.date.slice(5).replace("-", "/")}</span></div>
+        <div class="cd-num">${c.txt}</div>
+      </div>`).join("")}
+  </div>
+
+  <div class="pressure card ${statusCls}">
+    <div class="pressure-status">${status}</div>
+    <div class="pressure-bars">
+      <div class="pb-line"><span>今天时间</span><div class="progress-bar"><div style="width:${Math.round(df * 100)}%;background:linear-gradient(90deg,#ff9c2b,#ff5a5a)"></div></div><b>${Math.round(df * 100)}%</b></div>
+      <div class="pb-line"><span>打卡完成</span><div class="progress-bar"><div style="width:${Math.round(qf * 100)}%;background:linear-gradient(90deg,var(--accent2),var(--accent))"></div></div><b>${doneCnt}/${Q.length}</b></div>
+    </div>
+    ${nextQ ? `<button class="primary next-action" data-view="${nextQ.view}">🎯 现在就做：${nextQ.label.split("（")[0]}（还差 ${nextQ.n - nextQ.done} 题）▶</button>`
+            : `<button class="primary next-action" data-view="battle">⚡ 全部清零！去边打边刷攒能量 ▶</button>`}
+  </div>
+
+  <div class="card">
+    <h3>📋 今日打卡 <span class="muted" style="font-size:13px">${doneCnt}/${Q.length} 项 · 约 ${totalMin} 分钟</span></h3>
+    <div class="quest-grid" style="margin-top:12px">
+      ${Q.map(q => {
+        const done = q.done >= q.n;
+        const short = q.label.split("（")[0];
+        return `
+        <div class="qtile ${done ? "qtile-done" : ""}" data-view="${q.view}" role="button">
+          ${ringHTML(q.done / q.n, done ? "✅" : q.icon, { size: 66, stroke: 6, color: done ? "var(--accent)" : "var(--accent2)" })}
+          <b>${short}</b>
+          <span class="muted">${q.done}/${q.n} · ${q.time} 分钟</span>
+        </div>`;
+      }).join("")}
+    </div>
+    ${allDone ? `<p class="muted" style="margin-top:10px">🗼 进阶塔已解锁：多刷 ${B - (allDone && B > 0 ? Math.min(extra - g.towerClaimed * B, B) : 0)} 题再爬一层。</p>` : ""}
+    ${[0, 6].includes(new Date().getDay()) ? `<p class="muted" style="margin-top:8px">🧪 周末加餐：<a href="https://englishtest.duolingo.com/practice" target="_blank" style="color:var(--accent2)">官方免费模拟</a>一次，记下估分。</p>` : ""}
+  </div>
+
+  <div class="plan-stats card">
+    <h3>📊 我的进展</h3>
+    <div class="ps-grid">
+      <div class="ps-cell"><b>${streak}</b><span>连击天数</span></div>
+      <div class="ps-cell"><b>${todayItems}</b><span>今日题数</span></div>
+      <div class="ps-cell"><b>${spAvg != null ? spAvg : "—"}</b><span>今日口语均分</span></div>
+      <div class="ps-cell"><b>${spBest != null ? spBest : "—"}</b><span>今日口语最佳</span></div>
+      <div class="ps-cell"><b>${days.size}</b><span>累计天数</span></div>
+      <div class="ps-cell"><b>${log.length}</b><span>累计题数</span></div>
+      <div class="ps-cell"><b>Lv.${lv.lv}</b><span>${lv.name}</span></div>
+      <div class="ps-cell"><b>${getWrong().length}</b><span>错题待复盘</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🗺 作战阶段</h3>
+    <div class="phase-row">
+      ${phases.map((ph, i) => `
+        <div class="phase ${i === cur ? "phase-cur" : i < cur ? "phase-done" : ""}">
+          <div class="ph-head">${ph.icon} ${ph.name} <span class="muted">→ ${ph.until.slice(5).replace("-", "/")}</span>${i === cur ? ' <span class="ph-now">进行中</span>' : ""}</div>
+          <div class="ph-focus muted">${ph.focus}</div>
+        </div>`).join("")}
+    </div>
+    <details class="plan-dates">
+      <summary>📅 修改考试 / 截止日期（自动保存）</summary>
+      <label>首考 <input type="date" id="pd-exam1" value="${p.exam1}"></label>
+      <label>二考 <input type="date" id="pd-exam2" value="${p.exam2}"></label>
+      <label>提交死线 <input type="date" id="pd-deadline" value="${p.deadline}"></label>
+    </details>
+  </div>`;
+
+  view.querySelectorAll("[data-view]").forEach(el => {
+    el.onclick = () => document.querySelector(`.nav-item[data-view="${el.dataset.view}"]`).click();
+  });
+  ["exam1", "exam2", "deadline"].forEach(k => {
+    const inp = view.querySelector("#pd-" + k);
+    if (inp) inp.onchange = () => { const np = getPlan(); np[k] = inp.value; savePlan(np); renderPlan(); toast("📅 日期已更新"); };
+  });
+}
+
 function renderDashboard() {
   const view = $("#view-dashboard");
   const log = getLog();
@@ -2020,32 +2166,21 @@ function renderDashboard() {
     <div class="hero">
       <div class="hero-streak">🔥 ${streak}<div class="lbl">连续天数</div></div>
       <div class="hero-level">
-        <div class="lv-name">${lv.icon} Lv.${lv.lv} ${lv.name}</div>
+        <div class="lv-name">${lv.icon} <b>Lv.${lv.lv}</b> · ${lv.name}</div>
         <div class="xp-bar"><div style="width:${lv.pct}%"></div></div>
-        <div class="lbl">${xp} XP${lv.next ? ` · 距 ${lv.next.icon} ${lv.next.name} 还差 ${lv.next.xp - xp} XP` : " · 满级！"}</div>
+        <div class="lbl">${lv.next ? `还差 ${lv.next.xp - xp} XP 升级` : "满级！"} · 共 ${xp} XP</div>
       </div>
       <div class="hero-coins" id="hero-coins" title="去打怪塔花掉它">🪶 ${fmtNum(g.coins)}<div class="lbl">羽币</div></div>
-      <div class="hero-deadline" style="cursor:pointer" onclick="openGoalSetup()" title="点击设定/修改目标">${daysLeft != null ? `${daysLeft}<div class="lbl">天后截止</div>` : `🎯<div class="lbl">设定目标</div>`}</div>
+      <div class="hero-deadline" style="cursor:pointer" data-view="plan" title="查看冲刺计划">${(d => d != null ? `${d}<div class="lbl">天后死线</div>` : `🎯<div class="lbl">设定目标</div>`)(Math.ceil((new Date(getPlan().deadline + "T23:59:59") - Date.now()) / 86400000))}</div>
     </div>
 
     ${allDone ? `<div class="card dash-banner" style="border-color:var(--accent);background:#16240f;padding:12px 20px"><b>🎉 今日全勤！+100 XP · +${BASE_CLEAR_REWARD} 🪶</b> <span class="muted">进阶塔已解锁——多刷的题都在爬塔。</span></div>` : ""}
 
     <div class="dash-main">
-      <div class="card">
-        <h3>📋 今日打卡 <span class="muted" style="font-size:13px">${doneCnt}/${Q.length} 项 · 约 ${totalMin} 分钟</span></h3>
-        <div class="quest-grid" style="margin-top:12px">
-          ${Q.map(q => {
-            const done = q.done >= q.n;
-            const short = q.label.split("（")[0];
-            return `
-            <div class="qtile ${done ? "qtile-done" : ""}" data-view="${q.view}" role="button">
-              ${ringHTML(q.done / q.n, done ? "✅" : q.icon, { size: 66, stroke: 6, color: done ? "var(--accent)" : "var(--accent2)" })}
-              <b>${short}</b>
-              <span class="muted">${q.done}/${q.n} · ${q.time} 分钟</span>
-            </div>`;
-          }).join("")}
-        </div>
-        ${[0, 6].includes(dow) ? `<p class="muted" style="margin-top:10px">🧪 周末加餐（不计入打卡）：<a href="https://englishtest.duolingo.com/practice" target="_blank" style="color:var(--accent2)">官方免费模拟测试</a>一次，记下估分。</p>` : ""}
+      <div class="card plan-cta" data-view="plan" role="button">
+        <h3>⏰ 冲刺作战室</h3>
+        <p class="muted" style="margin:6px 0 10px">今日打卡 <b style="color:var(--accent)">${doneCnt}/${Q.length}</b> · 倒计时、作战阶段、每日任务都在这里</p>
+        <button class="primary" style="width:100%;margin:0">进入作战室 ▶</button>
       </div>
     </div>
 
@@ -2081,12 +2216,7 @@ function renderDashboard() {
       </div>
     </div>
 
-    <details class="card dash-foot">
-      <summary style="cursor:pointer">📅 七周总计划（点开查看）</summary>
-      ${DATA.plan.map(w => `
-        <div style="margin-top:12px"><b>${w.title}</b> <span class="muted" style="font-size:12px">${w.range}</span>
-        <ul style="margin:4px 0 0 20px" class="muted">${w.items.map(it => `<li>${it}</li>`).join("")}</ul></div>`).join("")}
-    </details>
+
   </div>`;
 
   view.querySelectorAll("[data-view]").forEach(el => {
@@ -3609,7 +3739,7 @@ function renderMiniBody(view) {
     body.innerHTML = `
       <div class="prompt-box" style="border-left-color:var(--warn);font-size:15px">🔒 边打边刷在<b>完成今日基础打卡</b>后开放（还差 ${gate.Q.filter(q => q.done < q.n).length} 项）。先去把今天的正餐吃完！</div>
       <button class="primary" id="mini-goquest" style="margin-top:4px">去完成今日任务 ▶</button>`;
-    $("#mini-goquest", body).onclick = () => document.querySelector('.nav-item[data-view="dashboard"]').click();
+    $("#mini-goquest", body).onclick = () => document.querySelector('.nav-item[data-view="plan"]').click();
     return;
   }
   if (!MINI.q || coolLeft(MINI.mode) > 0) {
@@ -3917,7 +4047,7 @@ function renderLog() {
 // ───────────────────── init ─────────────────────
 if (!window.isSecureContext) $("#https-banner").classList.remove("hidden");
 
-const refreshers = { dashboard: renderDashboard, scores: renderScores, log: renderLog, vocab: renderVocab, battle: () => { renderBattle(); renderDrill(); }, coach: renderCoach, wrong: renderWrong };
+const refreshers = { plan: renderPlan, dashboard: renderDashboard, scores: renderScores, log: renderLog, vocab: renderVocab, battle: () => { renderBattle(); renderDrill(); }, coach: renderCoach, wrong: renderWrong };
 
 refreshers.is = setupIS();
 refreshers.lt = setupLT();
@@ -4034,6 +4164,7 @@ document.querySelectorAll(".nav-item").forEach(btn => {
   });
 });
 
+renderPlan();
 renderDashboard();
 renderGoalLine();
 setTimeout(() => { if (!getGoal() && !sessionStorage.getItem("goalskip") && !location.search.includes("demo")) openGoalSetup(); }, 1400);

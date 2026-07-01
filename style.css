@@ -1335,3 +1335,50 @@ mark.fix-good { background: rgba(76, 217, 130, 0.22); color: #8fe6a8; font-weigh
 
 /* 缩放/翻转以脚底为原点，保持站地 */
 .boss-img, .hero-img { transform-origin: center bottom; }
+
+/* ═══════ ⏰ 冲刺作战室 ═══════ */
+.cd-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 14px; }
+.cd-card { border-radius: var(--radius); border: 1px solid var(--border); padding: 14px 16px; background: rgba(255,255,255,0.03); }
+.cd-title { font-size: 13px; color: var(--muted); font-weight: 700; }
+.cd-num { font-family: var(--font-display); font-weight: 800; font-size: 34px; letter-spacing: 0.5px;
+  font-variant-numeric: tabular-nums; margin-top: 4px; }
+.cd-calm .cd-num { color: var(--text); }
+.cd-warn { border-color: rgba(255, 156, 43, 0.55); background: rgba(255, 156, 43, 0.06); }
+.cd-warn .cd-num { color: #ff9c2b; }
+.cd-danger { border-color: rgba(255, 90, 90, 0.75); background: rgba(255, 90, 90, 0.08); animation: cdPulse 2.2s ease-in-out infinite; }
+.cd-danger .cd-num { color: #ff5a5a; }
+.cd-past { opacity: 0.55; }
+@keyframes cdPulse { 50% { transform: scale(1.018); } } /* 纯 transform 缓脉冲，无闪烁 */
+
+.pressure { margin-bottom: 14px; }
+.pressure-status { font-weight: 800; font-size: 16.5px; margin-bottom: 10px; }
+.pressure.danger { border-color: rgba(255, 90, 90, 0.65); }
+.pressure.danger .pressure-status { color: #ff7b7b; }
+.pressure.warn .pressure-status { color: #ff9c2b; }
+.pressure.ok .pressure-status { color: var(--accent); }
+.pb-line { display: flex; align-items: center; gap: 10px; margin: 6px 0; font-size: 12.5px; color: var(--muted); }
+.pb-line span { width: 62px; }
+.pb-line .progress-bar { flex: 1; height: 9px; }
+.pb-line b { width: 44px; text-align: right; font-variant-numeric: tabular-nums; }
+.next-action { width: 100%; margin: 12px 0 0; font-size: 16px; padding: 13px; }
+
+.ps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 10px; }
+.ps-cell { background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 10px; padding: 10px 8px; text-align: center; }
+.ps-cell b { display: block; font-size: 22px; font-family: var(--font-display); font-variant-numeric: tabular-nums; }
+.ps-cell span { font-size: 11.5px; color: var(--muted); }
+
+.phase-row { display: grid; gap: 10px; margin-top: 10px; }
+.phase { border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; background: rgba(255,255,255,0.02); }
+.phase-cur { border-color: rgba(255, 90, 90, 0.6); background: rgba(255, 90, 90, 0.06); }
+.phase-done { opacity: 0.5; }
+.ph-head { font-weight: 800; font-size: 14px; }
+.ph-now { font-size: 10.5px; background: #ff5a5a; color: #fff; border-radius: 99px; padding: 1px 8px; vertical-align: 2px; }
+.ph-focus { font-size: 12.5px; margin-top: 4px; }
+.plan-dates { margin-top: 12px; font-size: 13px; color: var(--muted); }
+.plan-dates summary { cursor: pointer; }
+.plan-dates label { display: inline-flex; align-items: center; gap: 6px; margin: 10px 14px 0 0; }
+.plan-dates input { background: rgba(255,255,255,0.06); border: 1px solid var(--border); color: var(--text); border-radius: 7px; padding: 4px 8px; font: inherit; }
+
+.plan-cta { cursor: pointer; border-color: rgba(255, 90, 90, 0.45); }
+.plan-cta:hover { border-color: #ff5a5a; }
+@media (max-width: 760px) { .cd-row { grid-template-columns: 1fr; } .ps-grid { grid-template-columns: repeat(2, 1fr); } .cd-num { font-size: 28px; } }
